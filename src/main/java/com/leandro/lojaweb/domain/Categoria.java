@@ -2,9 +2,17 @@ package com.leandro.lojaweb.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity//Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
 public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)//Definindo a geracao automatica dos ids das categorias
 	private Integer id;
 	private String nome;
 	
