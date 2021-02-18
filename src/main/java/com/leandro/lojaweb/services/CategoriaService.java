@@ -1,12 +1,12 @@
 package com.leandro.lojaweb.services;
 
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.leandro.lojaweb.domain.Categoria;
 import com.leandro.lojaweb.repositories.CategoriaRepository;
+import com.leandro.lojaweb.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaService {
@@ -17,10 +17,9 @@ public class CategoriaService {
 	
 	//Aqui vou fazer uma funcao de buscar a Categoria por ID.
 	public Categoria buscar(Integer id) {
-		
 		Optional<Categoria> obj = repo.findById(id);
-		return obj.orElse(null);
-		
-	}
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+		"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
+		}
 
 }
