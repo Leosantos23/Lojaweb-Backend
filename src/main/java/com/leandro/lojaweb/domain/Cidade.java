@@ -3,47 +3,43 @@ package com.leandro.lojaweb.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-@Entity//aqui faco tambem o mapeamento dizendo que sera uma entidade tambem.
-public class Produto implements Serializable {
+@Entity//Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
+public class Cidade implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	//Atributos basicos
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)//Definindo a geracao automatica dos ids das categorias
 	private Integer id;
 	private String nome;
-	private Double preco;
 	
-	@JsonBackReference//Mostra que do outro lado da associacao ja foi buscada, portanto nao busca mais.
-	//Aqui faco associacoes de um ou mais produto para muitas categorias
-	@ManyToMany
-	@JoinTable(name = "PRODUTO_CATEGORIA", 
-	joinColumns = @JoinColumn(name="produto_id"),
-	inverseJoinColumns = @JoinColumn(name= "categoria_id"))
-	private List <Categoria> categorias = new ArrayList<>();
+	//Associacoes e relacionamentos, muitas cidades tem um estado.
+	@ManyToOne//Relacionamento muitos para um.
+	@JoinColumn(name= "estado_id")//Mapeamento da associacao no lado cidade. ja com o nome da chave estrangeira de estado.
+	private Estado estado;
 	
 	//Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
-	public Produto() {
+	public Cidade() {
 		
 	}
 
 	//Metodo Construtor com os parametros, - colecao
-	public Produto(Integer id, String nome, Double preco) {
+	public Cidade(Integer id, String nome, Estado estado) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.preco = preco;
+		this.estado = estado;
 	}
-
+	
+	
 	//getters e setters
 	public Integer getId() {
 		return id;
@@ -61,20 +57,12 @@ public class Produto implements Serializable {
 		this.nome = nome;
 	}
 
-	public Double getPreco() {
-		return preco;
+	public Estado getEstado() {
+		return estado;
 	}
 
-	public void setPreco(Double preco) {
-		this.preco = preco;
-	}
-
-	public List<Categoria> getCategorias() {
-		return categorias;
-	}
-
-	public void setCategorias(List<Categoria> categorias) {
-		this.categorias = categorias;
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
 
 	//HashCode e Equals, em java para que dois objetos possam ser comparados pelo seu conteudo e nao pela memoria.
@@ -94,7 +82,7 @@ public class Produto implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Produto other = (Produto) obj;
+		Cidade other = (Cidade) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -102,6 +90,5 @@ public class Produto implements Serializable {
 			return false;
 		return true;
 	}
-		
-
+	
 }

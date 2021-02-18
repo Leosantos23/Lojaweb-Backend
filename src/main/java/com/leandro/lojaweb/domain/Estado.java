@@ -3,45 +3,37 @@ package com.leandro.lojaweb.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-@Entity//aqui faco tambem o mapeamento dizendo que sera uma entidade tambem.
-public class Produto implements Serializable {
+@Entity//Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
+public class Estado implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	//atributos basicos
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)//Definindo a geracao automatica dos ids das categorias
 	private Integer id;
 	private String nome;
-	private Double preco;
 	
-	@JsonBackReference//Mostra que do outro lado da associacao ja foi buscada, portanto nao busca mais.
-	//Aqui faco associacoes de um ou mais produto para muitas categorias
-	@ManyToMany
-	@JoinTable(name = "PRODUTO_CATEGORIA", 
-	joinColumns = @JoinColumn(name="produto_id"),
-	inverseJoinColumns = @JoinColumn(name= "categoria_id"))
-	private List <Categoria> categorias = new ArrayList<>();
+	//Associacoes e relacionamentos, um estado tem varias cidades
+	@OneToMany(mappedBy= "estado")//o Inverso da associacao em cidade
+	private List<Cidade> cidades = new ArrayList<>();
 	
 	//Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
-	public Produto() {
+	public Estado() {
 		
 	}
 
 	//Metodo Construtor com os parametros, - colecao
-	public Produto(Integer id, String nome, Double preco) {
+	public Estado(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.preco = preco;
 	}
 
 	//getters e setters
@@ -61,20 +53,12 @@ public class Produto implements Serializable {
 		this.nome = nome;
 	}
 
-	public Double getPreco() {
-		return preco;
+	public List<Cidade> getCidades() {
+		return cidades;
 	}
 
-	public void setPreco(Double preco) {
-		this.preco = preco;
-	}
-
-	public List<Categoria> getCategorias() {
-		return categorias;
-	}
-
-	public void setCategorias(List<Categoria> categorias) {
-		this.categorias = categorias;
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
 	}
 
 	//HashCode e Equals, em java para que dois objetos possam ser comparados pelo seu conteudo e nao pela memoria.
@@ -94,7 +78,7 @@ public class Produto implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Produto other = (Produto) obj;
+		Estado other = (Estado) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -102,6 +86,5 @@ public class Produto implements Serializable {
 			return false;
 		return true;
 	}
-		
-
+	
 }
