@@ -1,5 +1,6 @@
 package com.leandro.lojaweb;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,20 @@ import com.leandro.lojaweb.domain.Cidade;
 import com.leandro.lojaweb.domain.Cliente;
 import com.leandro.lojaweb.domain.Endereco;
 import com.leandro.lojaweb.domain.Estado;
+import com.leandro.lojaweb.domain.Pagamento;
+import com.leandro.lojaweb.domain.PagamentoComBoleto;
+import com.leandro.lojaweb.domain.PagamentoComCartao;
+import com.leandro.lojaweb.domain.Pedido;
 import com.leandro.lojaweb.domain.Produto;
+import com.leandro.lojaweb.domain.enums.StatusPagamento;
 import com.leandro.lojaweb.domain.enums.TipoCliente;
 import com.leandro.lojaweb.repositories.CategoriaRepository;
 import com.leandro.lojaweb.repositories.CidadeRepository;
 import com.leandro.lojaweb.repositories.ClienteRepository;
 import com.leandro.lojaweb.repositories.EnderecoRepository;
 import com.leandro.lojaweb.repositories.EstadoRepository;
+import com.leandro.lojaweb.repositories.PagamentoRepository;
+import com.leandro.lojaweb.repositories.PedidoRepository;
 import com.leandro.lojaweb.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -45,6 +53,14 @@ public class LojawebApplication  implements CommandLineRunner{
 	//Aqui chamo o repositorio
 	@Autowired//Para ser instanciado automaticamente
 	private ClienteRepository clienteRepository;
+	
+	//Aqui chamo o repositorio
+	@Autowired//Para ser instanciado automaticamente
+	private PedidoRepository pedidoRepository;
+	
+	//Aqui chamo o repositorio
+	@Autowired//Para ser instanciado automaticamente
+	private PagamentoRepository pagamentoRepository;
 	
 	//Aqui chamo o repositorio
 	@Autowired//Para ser instanciado automaticamente
@@ -113,6 +129,31 @@ public class LojawebApplication  implements CommandLineRunner{
 		
 		//Salvar os enderecos no banco de dados
 		enderecoRepository.saveAll(Arrays.asList(e1, e2));
+		
+		//Formatar a data
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		//Instancias de Pedidos
+		Pedido ped1 = new Pedido (null, sdf.parse("19/02/2021 10:55"), cli1, e1);
+		Pedido ped2 = new Pedido (null, sdf.parse("20/02/2021 11:55"), cli1, e2);
+		
+		//Instancias de pagamentos
+		Pagamento pg1 = new PagamentoComCartao(null, StatusPagamento.PAGO, ped1, 6);
+		ped1.setPagamento(pg1);
+		
+		Pagamento pg2 = new PagamentoComBoleto(null, StatusPagamento.PENDENTE, ped2, sdf.parse("20/03/2021 00:00"), null);
+		ped2.setPagamento(pg2);
+		
+		//Associar o cliente com os pedidos dele
+		cli1.getPedidos().addAll(Arrays.asList(ped1,ped2));
+		
+		//Salvar os pedidos e pagamentos
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pg1, pg2));
+		
+		
+		
+		
 		
 	}
 	

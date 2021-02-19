@@ -39,6 +39,10 @@ public class Cliente implements Serializable {
 	//Aqui coloco telefone, por um conjunto de strings
 	private Set <String> telefones = new HashSet<>();
 	
+	//o cliente tem que conhecer os pedidos
+	@OneToMany(mappedBy= "cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
+	
 	//Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
 	private Cliente () {
 		
@@ -111,6 +115,14 @@ public class Cliente implements Serializable {
 	public void setTelefones(Set<String> telefones) {
 		this.telefones = telefones;
 	}
+	
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
 
 	//HashCode e Equals, em java para que dois objetos possam ser comparados pelo seu conteudo e nao pela memoria.
 	@Override
@@ -137,9 +149,5 @@ public class Cliente implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
-	
+
 }
