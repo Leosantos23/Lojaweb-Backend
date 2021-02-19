@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity//Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
 public class Estado implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -21,6 +23,7 @@ public class Estado implements Serializable {
 	private String nome;
 	
 	//Associacoes e relacionamentos, um estado tem varias cidades
+	@JsonBackReference//aqui nao deixo serializar as cidades, sera omitido
 	@OneToMany(mappedBy= "estado")//o Inverso da associacao em cidade
 	private List<Cidade> cidades = new ArrayList<>();
 	

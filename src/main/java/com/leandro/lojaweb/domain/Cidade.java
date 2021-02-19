@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity//Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
 public class Cidade implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -22,6 +24,7 @@ public class Cidade implements Serializable {
 	private String nome;
 	
 	//Associacoes e relacionamentos, muitas cidades tem um estado.
+	@JsonManagedReference//Aqui deixo a cidade serializar os estados
 	@ManyToOne//Relacionamento muitos para um.
 	@JoinColumn(name= "estado_id")//Mapeamento da associacao no lado cidade. ja com o nome da chave estrangeira de estado.
 	private Estado estado;

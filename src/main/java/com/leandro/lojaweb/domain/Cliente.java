@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.leandro.lojaweb.domain.enums.TipoCliente;
 
 @Entity//Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
@@ -28,6 +29,7 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 	
+	@JsonManagedReference//Aqui falo que o cliente pode serializar o endereco dele
 	@OneToMany(mappedBy= "cliente")//foi mapeado pelo lado cliente
 	//Associacao cliente tem varios enderecos
 	private List<Endereco>enderecos = new ArrayList<>();
