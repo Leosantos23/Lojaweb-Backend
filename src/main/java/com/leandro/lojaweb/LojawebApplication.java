@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.leandro.lojaweb.domain.Categoria;
 import com.leandro.lojaweb.domain.Cidade;
+import com.leandro.lojaweb.domain.Cliente;
+import com.leandro.lojaweb.domain.Endereco;
 import com.leandro.lojaweb.domain.Estado;
 import com.leandro.lojaweb.domain.Produto;
+import com.leandro.lojaweb.domain.enums.TipoCliente;
 import com.leandro.lojaweb.repositories.CategoriaRepository;
 import com.leandro.lojaweb.repositories.CidadeRepository;
+import com.leandro.lojaweb.repositories.ClienteRepository;
+import com.leandro.lojaweb.repositories.EnderecoRepository;
 import com.leandro.lojaweb.repositories.EstadoRepository;
 import com.leandro.lojaweb.repositories.ProdutoRepository;
 
@@ -36,6 +41,15 @@ public class LojawebApplication  implements CommandLineRunner{
 	//Aqui chamo o repositorio
 	@Autowired//Para ser instanciado automaticamente
 	private CidadeRepository cidadeRepository;
+	
+	//Aqui chamo o repositorio
+	@Autowired//Para ser instanciado automaticamente
+	private ClienteRepository clienteRepository;
+	
+	//Aqui chamo o repositorio
+	@Autowired//Para ser instanciado automaticamente
+	private EnderecoRepository enderecoRepository;
+
 	
 	public static void main(String[] args) {
 		SpringApplication.run(LojawebApplication.class, args);
@@ -80,6 +94,25 @@ public class LojawebApplication  implements CommandLineRunner{
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		//Salvar as cidades no banco de dados
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
+		
+		//Instancias de Clientes
+		Cliente cli1 = new Cliente(null, "Leandro Moreira", "leandro@gmail.com", "97778845632", TipoCliente.PESSOAFISICA);
+		
+		//Aqui instancio os telefones do cliente
+		cli1.getTelefones().addAll(Arrays.asList("999090935", "992213331"));
+		
+		//Instancias de endereco
+		Endereco e1 = new Endereco(null, "Rua rp10", "s/n", "Qd 21, Lt 06", "Jardim Paraiso", "75456224", cli1, c1 );
+		Endereco e2 = new Endereco(null, "Rua rp13", "s/n", "Qd 20, Lt 26", "Jardim Flores", "75454724", cli1, c2 );
+		
+		//Associar o cliente tem que conhecer o endereco dele
+		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+		
+		//Salvar os cliente no banco de dados
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		
+		//Salvar os enderecos no banco de dados
+		enderecoRepository.saveAll(Arrays.asList(e1, e2));
 		
 	}
 	
