@@ -16,7 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity//Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
 public class Pedido implements Serializable {
@@ -30,13 +29,11 @@ public class Pedido implements Serializable {
 	private Date instante;
 	
 	//Relacionamento com pagamento
-	@JsonManagedReference//permitir que o pagamento seja serializado
 	@OneToOne(cascade= CascadeType.ALL, mappedBy= "pedido")//Relacionamento um para um, usei CASCADE, porque senao da um erra de entidade
 	//transiente quando vai salvar um pedido e o pagamento dele, e uma peculiaridade do JPA.
 	private Pagamento pagamento;
 	
 	//Relacionamento com cliente
-	@JsonManagedReference//permitir que o cliente seja serializado
 	@ManyToOne
 	@JoinColumn(name= "cliente_id")
 	private Cliente cliente;

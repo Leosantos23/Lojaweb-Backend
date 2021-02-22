@@ -3,13 +3,12 @@ package com.leandro.lojaweb.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity//Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
 public class Categoria implements Serializable {
@@ -21,7 +20,6 @@ public class Categoria implements Serializable {
 	private String nome;
 	
 	//Aqui faco associacoes de uma categoria para muitos produtos
-	@JsonManagedReference//Para avisar que esta tudo bem e serializar os produtos.
 	@ManyToMany(mappedBy = "categorias")
 	private List <Produto> produtos = new ArrayList<>();
 	
