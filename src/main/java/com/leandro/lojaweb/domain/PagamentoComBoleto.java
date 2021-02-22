@@ -4,16 +4,21 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.leandro.lojaweb.domain.enums.StatusPagamento;
 
 @Entity//Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
 public class PagamentoComBoleto extends Pagamento {
 	private static final long serialVersionUID = 1L;
 	
+	@JsonFormat(pattern= "dd/MM/yyyy")//Para formatar a data bonitinho no JSON
 	private Date dataVencimento;
+	
+	@JsonFormat(pattern= "dd/MM/yyyy")//Para formatar a data bonitinho no JSON
 	private Date dataPagamento;
 	
 	//Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
+	@SuppressWarnings("unused")
 	private PagamentoComBoleto() {
 		
 	}

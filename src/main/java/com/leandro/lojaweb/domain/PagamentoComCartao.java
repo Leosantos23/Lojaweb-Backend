@@ -11,6 +11,7 @@ public class PagamentoComCartao extends Pagamento{
 	private Integer numeroDeParcelas;
 	
 	//Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
+	@SuppressWarnings("unused")
 	private PagamentoComCartao() {
 		
 	}

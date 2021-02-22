@@ -36,6 +36,7 @@ public class Endereco implements Serializable {
 	private Cidade cidade;
 	
 	//Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
+	@SuppressWarnings("unused")
 	private Endereco() {
 		
 	}

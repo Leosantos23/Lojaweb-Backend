@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.leandro.lojaweb.domain.enums.StatusPagamento;
 
 @Entity//Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
@@ -22,6 +23,7 @@ public abstract class Pagamento implements Serializable {
 	private Integer status;
 	
 	//Relacionamento com pedido
+	@JsonBackReference//Os pagamentos de um cliente nao vai ser serializados
 	@OneToOne//Relacionamento um para um
 	@JoinColumn(name= "pedido_id")
 	@MapsId
