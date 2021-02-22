@@ -10,5 +10,4 @@ import com.leandro.lojaweb.domain.Categoria;
 //que por sua vez esta mapeado com a tabela no banco de dados.
 public interface CategoriaRepository extends JpaRepository<Categoria, Integer> {
 	
-
 }

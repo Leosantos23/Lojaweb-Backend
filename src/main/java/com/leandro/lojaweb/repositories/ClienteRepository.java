@@ -12,5 +12,4 @@ import com.leandro.lojaweb.domain.Cliente;
 //que por sua vez esta mapeado com a tabela no banco de dados.
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 	
-
 }

@@ -11,5 +11,4 @@ import com.leandro.lojaweb.domain.Pagamento;
 //que por sua vez esta mapeado com a tabela no banco de dados.
 public interface PagamentoRepository extends JpaRepository<Pagamento, Integer> {
 	
-
 }

@@ -43,9 +43,5 @@ public class StandardError implements Serializable {
 	public void setTimeStamp(Long timeStamp) {
 		this.timeStamp = timeStamp;
 	}
-	
-	
-	
-	
 
 }

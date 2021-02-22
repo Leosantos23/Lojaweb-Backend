@@ -2,6 +2,8 @@ package com.leandro.lojaweb.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity//Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
@@ -35,6 +38,10 @@ public class Pedido implements Serializable {
 	@ManyToOne
 	@JoinColumn(name= "endereco_de_entrega_id")
 	private Endereco enderecoDeEntrega;
+	
+	//Aqui a classe pedido tem que conhecer os itens associado a ela.
+	@OneToMany(mappedBy= "id.pedido")
+	private Set<ItemPedido> itens = new HashSet<>();//O Set me garante que nao tera o mesmo item repetido no mesmo pedido.
 	
 	//Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
 	public Pedido() {
@@ -90,6 +97,14 @@ public class Pedido implements Serializable {
 	public void setEnderecoDeEntrega(Endereco enderecoDeEntrega) {
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
+	
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
+	}
 
 	//HashCode e Equals, em java para que dois objetos possam ser comparados pelo seu conteudo e nao pela memoria.
 	@Override
@@ -116,11 +131,5 @@ public class Pedido implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
-	
-	
 
 }

@@ -10,5 +10,4 @@ import com.leandro.lojaweb.domain.Pedido;
 //que por sua vez esta mapeado com a tabela no banco de dados.
 public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 	
-
 }
