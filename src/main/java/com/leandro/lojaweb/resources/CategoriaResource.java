@@ -30,7 +30,7 @@ public class CategoriaResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	/*Este metodo tera de chamar a opcao que INSERE uma nova categoria no banco de dados ja com POST, este metodo recebera uma categoria no 
+	/*Este metodo tera de chamar a opcao que SALVAR/ INSERIR uma nova categoria no banco de dados ja com POST, este metodo recebera uma categoria no 
 	 * formato JSON , e inseris esta categoria no banco.
 	 */
 	@RequestMapping(method=RequestMethod.POST)
@@ -51,8 +51,18 @@ public class CategoriaResource {
 		obj.setId(id);//Para garantir que a categoria que sera atualizada e a que eu passar o id.
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
-		
 	}
+	
+	//Este metodo tem a funcionalidade de APAGAR uma categoria no banco de dados com o DELETE.
+	@RequestMapping(value= "/{id}", method=RequestMethod.DELETE)//Para que este metodo seja REST tenho que associar a algum verbo HTTP (GET, POST, PUT etc).
+	public ResponseEntity<Void> delete (@PathVariable Integer id) {
+		
+	service.delete(id);
+	return ResponseEntity.noContent().build();
+	
+	}
+	
+	
 	
 
 }

@@ -2,10 +2,12 @@ package com.leandro.lojaweb.services;
 
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.leandro.lojaweb.domain.Categoria;
 import com.leandro.lojaweb.repositories.CategoriaRepository;
+import com.leandro.lojaweb.services.exceptions.DataIntegrityException;
 import com.leandro.lojaweb.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -34,6 +36,20 @@ public class CategoriaService {
 		
 		buscar(obj.getId());//Busca e se der erro, ja lanca uma excessao.
 		return repo.save(obj);//Esse metodo tera de retornar o repositorio.
+		
+	}
+
+	public void delete(Integer id) {
+		
+		buscar(id);//Busca e se der erro, ja lanca uma excessao.
+		try {
+		repo.deleteById(id);//Aqui apaga pelo id
+		}
+		catch (DataIntegrityViolationException e) {
+			
+			throw new DataIntegrityException("Nao e possivel excluir uma categoria que possui produtos disponiveis!");
+			
+		}
 		
 	}
 
