@@ -23,23 +23,36 @@ public class CategoriaResource {
 	@Autowired//Para instanciar automaticamente
 	private CategoriaService service;
 	
-	@RequestMapping(value= "/{id}", method=RequestMethod.GET)//Para que este metodo seja REST tenho que associar a algum verbo HTTP (GET, POST, etc)
-	public ResponseEntity<?> find (@PathVariable Integer id) {
+	@RequestMapping(value= "/{id}", method=RequestMethod.GET)//Para que este metodo seja REST tenho que associar a algum verbo HTTP (GET, POST, PUT etc).
+	public ResponseEntity<Categoria> find (@PathVariable Integer id) {
 		
 		Categoria obj = service.buscar(id);//Aqui chamo o obj o service ao metodo  buscar, repassando o id.
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	//Esse metodo tera de chamar a opcao que insere uma nova categoria no banco de dados ja com POST
+	/*Este metodo tera de chamar a opcao que INSERE uma nova categoria no banco de dados ja com POST, este metodo recebera uma categoria no 
+	 * formato JSON , e inseris esta categoria no banco.
+	 */
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert (@RequestBody Categoria obj) {
 		
 		obj = service.insert(obj);
+		//Uma boa pratica de engenharia de software, e referenciar tambem a URI
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
 		
 		return ResponseEntity.created(uri).build();
+	}
+	
+	//Este metodo tem a funcionalidade de ATUALIZAR uma categoria no banco de dados com o PUT.
+	@RequestMapping(value= "/{id}", method=RequestMethod.PUT)//Para que este metodo seja REST tenho que associar a algum verbo HTTP (GET, POST, PUT etc).
+	public ResponseEntity<Void> update (@RequestBody Categoria obj, @PathVariable Integer id ){
+		
+		obj.setId(id);//Para garantir que a categoria que sera atualizada e a que eu passar o id.
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
 		
 	}
+	
 
 }

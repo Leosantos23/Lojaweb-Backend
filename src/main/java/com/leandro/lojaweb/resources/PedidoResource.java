@@ -18,7 +18,7 @@ public class PedidoResource {
 	private PedidoService service;
 	
 	@RequestMapping(value= "/{id}", method=RequestMethod.GET)//Para que este metodo seja REST tenho que associar a algum verbo HTTP (GET, POST, etc)
-	public ResponseEntity<?> find (@PathVariable Integer id) {
+	public ResponseEntity<Pedido> find (@PathVariable Integer id) {
 		
 		Pedido obj = service.buscar(id);//Aqui chamo o obj o service ao metodo  buscar, repassando o id.
 		return ResponseEntity.ok().body(obj);
