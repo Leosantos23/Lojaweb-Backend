@@ -1,9 +1,10 @@
 package com.leandro.lojaweb.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.leandro.lojaweb.domain.Categoria;
+import com.leandro.lojaweb.dto.CategoriaDTO;
 import com.leandro.lojaweb.services.CategoriaService;
 
 
@@ -25,7 +27,6 @@ public class CategoriaResource {
 	
 	@RequestMapping(value= "/{id}", method=RequestMethod.GET)//Para que este metodo seja REST tenho que associar a algum verbo HTTP (GET, POST, PUT etc).
 	public ResponseEntity<Categoria> find (@PathVariable Integer id) {
-		
 		Categoria obj = service.buscar(id);//Aqui chamo o obj o service ao metodo  buscar, repassando o id.
 		return ResponseEntity.ok().body(obj);
 	}
@@ -35,7 +36,6 @@ public class CategoriaResource {
 	 */
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert (@RequestBody Categoria obj) {
-		
 		obj = service.insert(obj);
 		//Uma boa pratica de engenharia de software, e referenciar tambem a URI
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -47,7 +47,6 @@ public class CategoriaResource {
 	//Este metodo tem a funcionalidade de ATUALIZAR uma categoria no banco de dados com o PUT.
 	@RequestMapping(value= "/{id}", method=RequestMethod.PUT)//Para que este metodo seja REST tenho que associar a algum verbo HTTP (GET, POST, PUT etc).
 	public ResponseEntity<Void> update (@RequestBody Categoria obj, @PathVariable Integer id ){
-		
 		obj.setId(id);//Para garantir que a categoria que sera atualizada e a que eu passar o id.
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
@@ -56,10 +55,18 @@ public class CategoriaResource {
 	//Este metodo tem a funcionalidade de APAGAR uma categoria no banco de dados com o DELETE.
 	@RequestMapping(value= "/{id}", method=RequestMethod.DELETE)//Para que este metodo seja REST tenho que associar a algum verbo HTTP (GET, POST, PUT etc).
 	public ResponseEntity<Void> delete (@PathVariable Integer id) {
-		
 	service.delete(id);
 	return ResponseEntity.noContent().build();
+	}
 	
+	//Listar todas as categorias, sem mostrar os produtos com o DTO.
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> buscarTodas () {
+		List<Categoria> list = service.buscarTodas();//Aqui busco a lista do banco e  terei de converter para uma lista DTO.
+		//Com este codigo abaixo, eu consigo converter uma lista, para outra lista.
+		List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		//Abaixo passo o argumento listDTO para meu response.
+		return ResponseEntity.ok().body(listDTO);
 	}
 	
 	

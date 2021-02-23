@@ -1,5 +1,6 @@
 package com.leandro.lojaweb.services;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -51,6 +52,12 @@ public class CategoriaService {
 			
 		}
 		
+	}
+
+	//Metodo listar todas Categorias
+	public List<Categoria> buscarTodas() {
+		
+		return repo.findAll();
 	}
 
 }
