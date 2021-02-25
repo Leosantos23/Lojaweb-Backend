@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.leandro.lojaweb.domain.Categoria;
+import com.leandro.lojaweb.dto.CategoriaDTO;
 import com.leandro.lojaweb.repositories.CategoriaRepository;
 import com.leandro.lojaweb.services.exceptions.DataIntegrityException;
 import com.leandro.lojaweb.services.exceptions.ObjectNotFoundException;
@@ -71,5 +72,9 @@ public class CategoriaService {
 		return repo.findAll(pageRequest);
 	}
 	
-
+	//Metodo auxiliar, para instanciar uma categoria apartir de um DTO, 
+	public Categoria fromDTO (CategoriaDTO objDTO) {
+		return new Categoria (objDTO.getId(), objDTO.getNome());
+	}
+	
 }

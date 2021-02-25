@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +39,9 @@ public class CategoriaResource {
 	 * formato JSON , e inseris esta categoria no banco.
 	 */
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert (@RequestBody Categoria obj) {
+	public ResponseEntity<Void> insert (@Valid @RequestBody CategoriaDTO objDTO) {
+		//Aqui antes terei de converter um objeto DTO para um objeto ENTITY
+		Categoria obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
 		//Uma boa pratica de engenharia de software, e referenciar tambem a URI
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -48,7 +52,9 @@ public class CategoriaResource {
 	
 	//Este metodo tem a funcionalidade de ATUALIZAR uma categoria no banco de dados com o PUT.
 	@RequestMapping(value= "/{id}", method=RequestMethod.PUT)//Para que este metodo seja REST tenho que associar a algum verbo HTTP (GET, POST, PUT etc).
-	public ResponseEntity<Void> update (@RequestBody Categoria obj, @PathVariable Integer id ){
+	public ResponseEntity<Void> update (@Valid @RequestBody CategoriaDTO objDTO, @PathVariable Integer id ){
+		//Aqui antes terei de converter um objeto DTO para um objeto ENTITY
+		Categoria obj = service.fromDTO(objDTO);
 		obj.setId(id);//Para garantir que a categoria que sera atualizada e a que eu passar o id.
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();

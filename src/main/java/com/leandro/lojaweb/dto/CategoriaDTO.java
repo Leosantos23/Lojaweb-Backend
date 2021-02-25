@@ -2,12 +2,19 @@ package com.leandro.lojaweb.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.leandro.lojaweb.domain.Categoria;
 
 public class CategoriaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
+	
+	@NotEmpty(message= "Campo obrigatorio.")
+	@Length(min=5, max=80, message="O tamanho deve ser entre 5 e 80 caracteres.")
 	private String nome;
 	
 	//Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais

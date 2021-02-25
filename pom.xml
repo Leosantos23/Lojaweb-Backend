@@ -28,23 +28,28 @@
 			<scope>test</scope>
 		</dependency>
 		
-		<!-- Dependencias do JPA, H2, DEVTOLLS -->
+	<!-- Dependencia do JPA-->
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-data-jpa</artifactId>
 	</dependency>
-	
+	<!-- Dependencia do H2-->
 	<dependency>
 		 <groupId>com.h2database</groupId>
 		<artifactId>h2</artifactId>
 		<scope>runtime</scope>
 	</dependency>
-	
+	<!-- Dependencia do DEVTOLLS -->
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-devtools</artifactId>
 		<scope>runtime</scope>
 		<optional>true</optional>
+	</dependency>
+	<!-- Dependencia do VALIDATION -->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-validation</artifactId>
 	</dependency>
 		
 	</dependencies>
