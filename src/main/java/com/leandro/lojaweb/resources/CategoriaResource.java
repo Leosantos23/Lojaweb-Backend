@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -67,6 +69,20 @@ public class CategoriaResource {
 		List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
 		//Abaixo passo o argumento listDTO para meu response.
 		return ResponseEntity.ok().body(listDTO);
+	}
+	
+	//Listar todas as categorias, em paginas.
+	@RequestMapping(value="/pagina", method=RequestMethod.GET)
+	public ResponseEntity<Page<CategoriaDTO>> buscarPagina (
+			@RequestParam(value="pagina", defaultValue= "0") Integer pagina,
+			@RequestParam(value="linhas", defaultValue= "24") Integer linhas, 
+			@RequestParam(value="ordem", defaultValue= "nome") String ordem, 
+			@RequestParam(value="direcao", defaultValue= "ASC") String direcao) {
+		Page<Categoria> page = service.buscarPagina(pagina, linhas, ordem, direcao);//Aqui busco a lista do banco e  terei de converter para uma pagina DTO.
+		//Com este codigo abaixo, eu consigo converter uma pagina, para outra pagina.
+		Page<CategoriaDTO> pageDTO = page.map(obj -> new CategoriaDTO(obj));
+		//Abaixo passo o argumento listDTO para meu response.
+		return ResponseEntity.ok().body(pageDTO);
 	}
 	
 	
