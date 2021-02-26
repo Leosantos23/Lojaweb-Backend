@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.leandro.lojaweb.domain.Cliente;
-import com.leandro.lojaweb.domain.Cliente;
 import com.leandro.lojaweb.dto.ClienteDTO;
 import com.leandro.lojaweb.services.ClienteService;
 
@@ -54,7 +53,7 @@ public class ClienteResource {
 		//Listar todas as categorias, sem mostrar os produtos com o DTO.
 		@RequestMapping(method=RequestMethod.GET)
 		public ResponseEntity<List<ClienteDTO>> buscarTodas () {
-			List<Cliente> list = service.buscarTodas();//Aqui busco a lista do banco e  terei de converter para uma lista DTO.
+			List<Cliente> list = service.buscarTodos();//Aqui busco a lista do banco e  terei de converter para uma lista DTO.
 			//Com este codigo abaixo, eu consigo converter uma lista, para outra lista.
 			List<ClienteDTO> listDTO = list.stream().map(obj -> new ClienteDTO(obj)).collect(Collectors.toList());
 			//Abaixo passo o argumento listDTO para meu response.

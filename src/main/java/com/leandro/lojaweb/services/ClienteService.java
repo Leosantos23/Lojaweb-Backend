@@ -40,13 +40,6 @@ public class ClienteService {
 		
 	}
 
-	//Metodo auxiliar para atualizacao de cliente
-	private void updateData(Cliente newObj, Cliente obj) {
-	
-		newObj.setNome(obj.getNome());
-		newObj.setEmail(obj.getEmail());
-		
-	}
 
 	public void delete(Integer id) {
 		
@@ -63,23 +56,30 @@ public class ClienteService {
 	}
 
 	//Metodo listar todas Clientes
-	public List<Cliente> buscarTodas() {
+	public List<Cliente> buscarTodos() {
 		
 		return repo.findAll();
 	}
 	
-	//Metodo responsavel por paginar as categorias e mostrar organizadas osando o PAGE
+	//Metodo responsavel por paginar os clientes e mostrar organizadas osando o PAGE
 	public Page<Cliente> buscarPagina(Integer pagina, Integer linhas, String ordem, String direcao){
 		//Para fazer uma consulta e retornar uma pagina de dados, e preciso fazer outro objeto do tipo PAGEREQUEST
 		PageRequest pageRequest = PageRequest.of(pagina, linhas, Direction.valueOf(direcao),ordem);
 		return repo.findAll(pageRequest);
 	}
 	
-	//Metodo auxiliar, para instanciar uma categoria apartir de um DTO, 
+	//Metodo auxiliar, para instanciar um cliente apartir de um DTO, 
 	public Cliente fromDTO (ClienteDTO objDTO) {
 	
 	 return new Cliente (objDTO.getId(), objDTO.getNome(),objDTO.getEmail(), null, null);
 
-}
+	}
+	
+	//Metodo auxiliar para atualizacao de cliente
+	private void updateData(Cliente newObj, Cliente obj) {
+	
+		newObj.setNome(obj.getNome());
+		newObj.setEmail(obj.getEmail());	
+	}
 	
 }

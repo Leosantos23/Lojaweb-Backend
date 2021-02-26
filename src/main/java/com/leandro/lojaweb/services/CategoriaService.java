@@ -40,8 +40,9 @@ public class CategoriaService {
 	//Metodo update
 	public Categoria update(Categoria obj) {
 		
-		buscar(obj.getId());//Busca e se der erro, ja lanca uma excessao.
-		return repo.save(obj);//Esse metodo tera de retornar o repositorio.
+		Categoria newObj = buscar (obj.getId());//Busca e se der erro, ja lanca uma excessao.
+		updateData(newObj, obj);//Foi criado outro metodo auxiliar
+		return repo.save(newObj);//Esse metodo tera de retornar o repositorio.
 		
 	}
 
@@ -75,6 +76,13 @@ public class CategoriaService {
 	//Metodo auxiliar, para instanciar uma categoria apartir de um DTO, 
 	public Categoria fromDTO (CategoriaDTO objDTO) {
 		return new Categoria (objDTO.getId(), objDTO.getNome());
+	}
+	
+	//Metodo auxiliar para atualizacao de categorias
+	private void updateData(Categoria newObj, Categoria obj) {
+	
+		newObj.setNome(obj.getNome());
+		
 	}
 	
 }
