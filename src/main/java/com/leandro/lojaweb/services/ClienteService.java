@@ -73,7 +73,7 @@ public class ClienteService {
 		}
 		catch (DataIntegrityViolationException e) {
 			
-			throw new DataIntegrityException("Nao e possivel excluir, funcao ainda em construcao!");
+			throw new DataIntegrityException("Nao e possivel excluir, porque existe pedidos relacionados a este cliente!");
 			
 		}
 		
