@@ -2,21 +2,45 @@ package com.leandro.lojaweb.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.leandro.lojaweb.services.validacao.ClienteInsert;
+
+@ClienteInsert//Anotattion customizada
 public class ClienteNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@NotEmpty(message= "Campo obrigatorio!")
+	@Length(min=5, max=120, message="O tamanho deve ser entre 5 e 120 caracteres!")
 	private String nome;
+	
+	@NotEmpty(message= "Campo obrigatorio!")
+	@Email(message= "Email invalido!")
 	private String email;
+	
+	@NotEmpty(message= "Campo obrigatorio!")
 	private String cpfOuCnpj;
+	
 	private Integer tipo;
 	
+	@NotEmpty(message= "Campo obrigatorio!")
 	private String logradouro;
+	
+	@NotEmpty(message= "Campo obrigatorio!")
 	private String numero;
+	
 	private String complemento;
 	private String bairro;
+	
+	@NotEmpty(message= "Campo obrigatorio!")
 	private String cep;
 	
+	@NotEmpty(message= "Campo obrigatorio!")
 	private String telefone1;
+	
 	private String telefone2;
 	private String telefone3;
 	
