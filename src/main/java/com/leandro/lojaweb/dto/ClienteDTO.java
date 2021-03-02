@@ -8,7 +8,9 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import com.leandro.lojaweb.domain.Cliente;
+import com.leandro.lojaweb.services.validacao.ClienteUpdate;
 
+@ClienteUpdate//Chamo a anotattion customizada de updade
 public class ClienteDTO  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
