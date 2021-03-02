@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +27,10 @@ public class Cliente implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)//Definindo a geracao automatica dos ids
 	private Integer id;
 	private String nome;
+	
+	@Column(unique=true)//Aqui eu garanto que este campo sera unico.
 	private String email;
+	
 	private String cpfOuCnpj;
 	private Integer tipo;
 	

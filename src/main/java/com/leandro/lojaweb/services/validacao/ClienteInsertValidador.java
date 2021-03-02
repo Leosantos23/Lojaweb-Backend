@@ -8,6 +8,7 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.leandro.lojaweb.domain.Cliente;
 import com.leandro.lojaweb.domain.enums.TipoCliente;
 import com.leandro.lojaweb.dto.ClienteNewDTO;
 import com.leandro.lojaweb.repositories.ClienteRepository;
@@ -36,6 +37,12 @@ public class ClienteInsertValidador implements ConstraintValidator<ClienteInsert
 		if (objDto.getTipo().equals(TipoCliente.PESSOAJURIDICA.getCod())
 				&& !ValidaCpfCnpj.validaCNPJ(objDto.getCpfOuCnpj())) {
 			list.add(new CampoMensagem("cpfOuCnpj", "CNPJ invalido"));
+		}
+		
+		//Testar se o email ja existe
+		Cliente aux = repo.findByEmail(objDto.getEmail());
+		if (aux != null) {
+			list.add(new CampoMensagem("email", "Email ja existente!"));
 		}
 
 		for (CampoMensagem e : list) {
