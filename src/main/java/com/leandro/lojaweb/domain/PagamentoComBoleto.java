@@ -5,9 +5,11 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.leandro.lojaweb.domain.enums.StatusPagamento;
 
 @Entity//Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
+@JsonTypeName("pagamentoComBoleto")//Valor do campo adicional de pagamento com boleto.
 public class PagamentoComBoleto extends Pagamento {
 	private static final long serialVersionUID = 1L;
 	
