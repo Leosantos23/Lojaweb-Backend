@@ -38,6 +38,11 @@ public class ItemPedido implements Serializable {
 	//Para eu ter acesso direto ao pedido e produto fora da minnha classe item pedido.
 	//Faz mais sentido do que acessar o id e depois o item do pedido.
 	
+	//Metodo para calcular o subtotal dos pedidos
+	public double getSubtotalPedido() {
+		return (preco - desconto) * quantidade;
+	}
+	
 	@JsonIgnore//Nao sera serializado.
 	public Pedido getPedido() {
 		return id.getPedido();
