@@ -13,6 +13,7 @@ import com.leandro.lojaweb.domain.ItemPedido;
 import com.leandro.lojaweb.domain.PagamentoComBoleto;
 import com.leandro.lojaweb.domain.Pedido;
 import com.leandro.lojaweb.domain.enums.StatusPagamento;
+import com.leandro.lojaweb.repositories.ClienteRepository;
 import com.leandro.lojaweb.repositories.ItemPedidoRepository;
 import com.leandro.lojaweb.repositories.PagamentoRepository;
 import com.leandro.lojaweb.repositories.PedidoRepository;
@@ -38,6 +39,9 @@ public class PedidoService {
 
 	@Autowired
 	private ProdutoService produtoService;
+	
+	@Autowired
+	private ClienteService clienteService;
 
 	// Aqui vou fazer uma funcao de buscar a Categoria por ID.
 	public Pedido buscar(Integer id) {
@@ -51,6 +55,10 @@ public class PedidoService {
 		// Setar o id desse objeto para nulo, para garantir que realmente estou
 		// inserindo um novo pedido.
 		obj.setId(null);
+		
+		//Setar o cliente ao pedido.
+		obj.setCliente(clienteService.buscar(obj.getCliente().getId()));
+		
 		// Setar o instante desse pedido como sendo um new date, que garante uma nova
 		// data com o momento atual.
 		obj.setInstante(new Date());
@@ -71,10 +79,12 @@ public class PedidoService {
 
 		for (ItemPedido ip : obj.getItens()) {
 			ip.setDesconto(0.0);
-			ip.setPreco(produtoService.find(ip.getProduto().getId()).getPreco());
+			ip.setProduto(produtoService.find(ip.getProduto().getId()));
+			ip.setPreco(ip.getProduto().getPreco());
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
+		System.out.println(obj);
 		return obj;
 
 	}

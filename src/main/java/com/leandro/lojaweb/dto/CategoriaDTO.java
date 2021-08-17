@@ -10,28 +10,29 @@ import com.leandro.lojaweb.domain.Categoria;
 
 public class CategoriaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer id;
-	
-	@NotEmpty(message= "Campo obrigatorio!")
-	@Length(min=5, max=80, message="O tamanho deve ser entre 5 e 80 caracteres!")
+
+	@NotEmpty(message = "Campo obrigatorio!")
+	@Length(min = 5, max = 80, message = "O tamanho deve ser entre 5 e 80 caracteres!")
 	private String nome;
-	
-	//Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
-	//Alem disso algumas bibliotecas precisa dele.
-	public CategoriaDTO () {
-		
-	}
-	
-	//Metodo construtor DTO
-	public CategoriaDTO (Categoria obj) {
-		
-		id = obj.getId();
-		nome = obj.getNome();
-		
+
+	// Metodo Construtor vazio, que instancio um objeto sem jogar nada para os
+	// atributos principais
+	// Alem disso algumas bibliotecas precisa dele.
+	public CategoriaDTO() {
+
 	}
 
-	//getters e setters
+	// Metodo construtor DTO
+	public CategoriaDTO(Categoria obj) {
+
+		id = obj.getId();
+		nome = obj.getNome();
+
+	}
+
+	// getters e setters
 	public Integer getId() {
 		return id;
 	}
@@ -47,9 +48,5 @@ public class CategoriaDTO implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	
-	
-	
 
 }

@@ -1,67 +1,73 @@
 package com.leandro.lojaweb.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity//aqui faco tambem o mapeamento dizendo que sera uma entidade tambem.
+@Entity // aqui faco tambem o mapeamento dizendo que sera uma entidade tambem.
 public class ItemPedido implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	//Esta classe tera como id um objeto do tipo item PK (Primary Key)
-	@JsonIgnore//Nao sera serializado.
-	@EmbeddedId//Utilizei uma classe aux para representa-la
+
+	// Esta classe tera como id um objeto do tipo item PK (Primary Key)
+	@JsonIgnore // Nao sera serializado.
+	@EmbeddedId // Utilizei uma classe aux para representa-la
 	private ItemPedidoPK id = new ItemPedidoPK();
-	
+
 	private Double desconto;
 	private Integer quantidade;
 	private Double preco;
-	
-	//Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
+
+	// Metodo Construtor vazio, que instancio um objeto sem jogar nada para os
+	// atributos principais
 	@SuppressWarnings("unused")
 	private ItemPedido() {
-		
+
 	}
 
-	//Metodo Construtor com os parametros, - colecao
+	// Metodo Construtor com os parametros, - colecao
 	public ItemPedido(Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preco) {
 		super();
-		id.setPedido(pedido);//atribuo o pedido que veio como argumento
-		id.setProduto(produto);//atribuo o produto que veio como argumento
+		id.setPedido(pedido);// atribuo o pedido que veio como argumento
+		id.setProduto(produto);// atribuo o produto que veio como argumento
 		this.desconto = desconto;
 		this.quantidade = quantidade;
 		this.preco = preco;
 	}
-	
-	//Para eu ter acesso direto ao pedido e produto fora da minnha classe item pedido.
-	//Faz mais sentido do que acessar o id e depois o item do pedido.
-	
-	//Metodo para calcular o subtotal dos pedidos
-	public double getSubtotalPedido() {
+
+	// Para eu ter acesso direto ao pedido e produto fora da minnha classe item
+	// pedido.
+	// Faz mais sentido do que acessar o id e depois o item do pedido.
+
+	// Metodo para calcular o subtotal dos pedidos
+	public double getSubTotalPedido() {
 		return (preco - desconto) * quantidade;
 	}
-	
-	@JsonIgnore//Nao sera serializado.
+
+	@JsonIgnore // Nao sera serializado.
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
-	//sera serializado.
+
+	// sera serializado.
 	public Produto getProduto() {
 		return id.getProduto();
 	}
-	
-	//Void SET
-	public void setPedido (Pedido pedido) {
+
+	// Void SET
+	public void setPedido(Pedido pedido) {
 		id.setPedido(pedido);
 	}
-	
+
 	public void setProduto(Produto produto) {
-		 id.setProduto(produto);
+		id.setProduto(produto);
 	}
-	
-	//getters e setters
+
+	// getters e setters
 	public ItemPedidoPK getId() {
 		return id;
 	}
@@ -94,7 +100,8 @@ public class ItemPedido implements Serializable {
 		this.preco = preco;
 	}
 
-	//HashCode e Equals, em java para que dois objetos possam ser comparados pelo seu conteudo e nao pela memoria.
+	// HashCode e Equals, em java para que dois objetos possam ser comparados pelo
+	// seu conteudo e nao pela memoria.
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -118,6 +125,25 @@ public class ItemPedido implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	// Metodo to String, de implementacao basica de item pedido
+	@Override
+	public String toString() {
+		
+		//Para formatar o valor bonitinho
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append(getProduto().getNome());
+		builder.append(", Quantidade: ");
+		builder.append(getQuantidade());
+		builder.append(", Valor: ");
+		builder.append(nf.format(getPreco()));
+		builder.append(", Subtotal: ");
+		builder.append(nf.format(getSubTotalPedido()));
+		builder.append("\n");
+		return builder.toString();
 	}
 
 }
