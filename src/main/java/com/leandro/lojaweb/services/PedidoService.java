@@ -39,9 +39,13 @@ public class PedidoService {
 
 	@Autowired
 	private ProdutoService produtoService;
-	
+
 	@Autowired
 	private ClienteService clienteService;
+
+	// Injetar uma instancia para email service
+	@Autowired
+	private EmailService emailService;
 
 	// Aqui vou fazer uma funcao de buscar a Categoria por ID.
 	public Pedido buscar(Integer id) {
@@ -55,10 +59,10 @@ public class PedidoService {
 		// Setar o id desse objeto para nulo, para garantir que realmente estou
 		// inserindo um novo pedido.
 		obj.setId(null);
-		
-		//Setar o cliente ao pedido.
+
+		// Setar o cliente ao pedido.
 		obj.setCliente(clienteService.buscar(obj.getCliente().getId()));
-		
+
 		// Setar o instante desse pedido como sendo um new date, que garante uma nova
 		// data com o momento atual.
 		obj.setInstante(new Date());
@@ -84,7 +88,7 @@ public class PedidoService {
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
-		System.out.println(obj);
+		emailService.sendOrderConfirmationEmail(obj);
 		return obj;
 
 	}
