@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.leandro.lojaweb.services.DBService;
+import com.leandro.lojaweb.services.EmailService;
+import com.leandro.lojaweb.services.SmtpEmailService;
 
 @Configuration
 @Profile("dev")
@@ -32,5 +34,11 @@ public class DevConfig {
 		dbService.instanciateTestDatabase();
 		return true;
 	}
+	
+	@Bean//Instanciar la no smtp email service
+	public EmailService emailService() {
+		return new SmtpEmailService();
+	}
+
 
 }

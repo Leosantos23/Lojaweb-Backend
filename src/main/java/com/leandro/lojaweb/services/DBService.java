@@ -137,7 +137,7 @@ public class DBService {
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
 		// Instancias de Clientes
-		Cliente cli1 = new Cliente(null, "Leandro Moreira", "leandro@gmail.com", "97778845632",
+		Cliente cli1 = new Cliente(null, "Leandro Moreira", "lesoft.com@gmail.com", "97778845632",
 				TipoCliente.PESSOAFISICA);
 
 		// Aqui instancio os telefones do cliente
