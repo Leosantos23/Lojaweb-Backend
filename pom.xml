@@ -57,25 +57,21 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
-		
 		<!-- Dependencia de Email -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
-		
 		<!-- Dependencia do Thymeleaf-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
-		
 		<!-- Dependencia do spring security -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		
 		<!-- Dependencia do jsonwebtoken -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>

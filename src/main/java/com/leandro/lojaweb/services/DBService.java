@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.leandro.lojaweb.domain.Categoria;
@@ -68,6 +69,9 @@ public class DBService {
 	// Aqui chamo o repositorio
 	@Autowired // Para ser instanciado automaticamente
 	private ItemPedidoRepository itemPedidoRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
 
 	public void instanciateTestDatabase() throws ParseException {
 
@@ -137,8 +141,7 @@ public class DBService {
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
 		// Instancias de Clientes
-		Cliente cli1 = new Cliente(null, "Leandro Moreira", "lesoft.com@gmail.com", "97778845632",
-				TipoCliente.PESSOAFISICA);
+		Cliente cli1 = new Cliente(null, "Leandro Moreira", "lesoft.com@gmail.com", "97778845632", TipoCliente.PESSOAFISICA, pe.encode("123"));
 
 		// Aqui instancio os telefones do cliente
 		cli1.getTelefones().addAll(Arrays.asList("999090935", "992213331"));

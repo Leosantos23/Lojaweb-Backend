@@ -9,50 +9,53 @@ import org.hibernate.validator.constraints.Length;
 
 import com.leandro.lojaweb.services.validacao.ClienteInsert;
 
-@ClienteInsert//Anotattion customizada
+@ClienteInsert // Anotattion customizada
 public class ClienteNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	@NotEmpty(message= "Campo obrigatorio!")
-	@Length(min=5, max=120, message="O tamanho deve ser entre 5 e 120 caracteres!")
+
+	@NotEmpty(message = "Campo obrigatorio!")
+	@Length(min = 5, max = 120, message = "O tamanho deve ser entre 5 e 120 caracteres!")
 	private String nome;
-	
-	@NotEmpty(message= "Campo obrigatorio!")
-	@Email(message= "Email invalido!")
+
+	@NotEmpty(message = "Campo obrigatorio!")
+	@Email(message = "Email invalido!")
 	private String email;
-	
-	@NotEmpty(message= "Campo obrigatorio!")
+
+	@NotEmpty(message = "Campo obrigatorio!")
 	private String cpfOuCnpj;
-	
+
 	private Integer tipo;
-	
-	@NotEmpty(message= "Campo obrigatorio!")
+
+	@NotEmpty(message = "Campo obrigatorio!")
 	private String logradouro;
-	
-	@NotEmpty(message= "Campo obrigatorio!")
+
+	@NotEmpty(message = "Campo obrigatorio!")
 	private String numero;
-	
+
 	private String complemento;
 	private String bairro;
-	
-	@NotEmpty(message= "Campo obrigatorio!")
+
+	@NotEmpty(message = "Campo obrigatorio!")
 	private String cep;
-	
-	@NotEmpty(message= "Campo obrigatorio!")
+
+	@NotEmpty(message = "Campo obrigatorio!")
 	private String telefone1;
-	
+
 	private String telefone2;
 	private String telefone3;
-	
+
 	private Integer cidadeId;
-	
-	//Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
-	public ClienteNewDTO () {
-		
+
+	@NotEmpty(message = "Campo obrigatorio!")
+	private String senha;
+
+	// Metodo Construtor vazio, que instancio um objeto sem jogar nada para os
+	// atributos principais
+	public ClienteNewDTO() {
+
 	}
-	
-	
-	//Getters e Setters
+
+	// Getters e Setters
 	public String getNome() {
 		return nome;
 	}
@@ -156,7 +159,13 @@ public class ClienteNewDTO implements Serializable {
 	public void setCidadeId(Integer cidadeId) {
 		this.cidadeId = cidadeId;
 	}
-	
-	
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 
 }
