@@ -40,14 +40,14 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<!-- Dependencia do DEVTOLLS -->
+		<!-- Dependencia do Devtools -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
-		<!-- Dependencia do VALIDATION -->
+		<!-- Dependencia do Validation -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
@@ -58,7 +58,7 @@
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 		
-		<!-- Dependencia de email -->
+		<!-- Dependencia de Email -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
@@ -69,7 +69,20 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
-
+		
+		<!-- Dependencia do spring security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		
+		<!-- Dependencia do jsonwebtoken -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.7.0</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
