@@ -1,64 +1,75 @@
 package com.leandro.lojaweb.domain;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.leandro.lojaweb.domain.enums.Perfil;
 import com.leandro.lojaweb.domain.enums.TipoCliente;
 
-@Entity//Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
+@Entity // Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do
+		// banco de dados
 public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)//Definindo a geracao automatica dos ids
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Definindo a geracao automatica dos ids
 	private Integer id;
 	private String nome;
-	
-	@Column(unique=true)//Aqui eu garanto que este campo sera unico.
+
+	@Column(unique = true) // Aqui eu garanto que este campo sera unico.
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipo;
-	
-	//Acrescentar o atributop senha a cliente
+
+	// Acrescentar o atributo senha a cliente
 	@JsonIgnore
 	private String senha;
-	
-	@OneToMany(mappedBy= "cliente", cascade= CascadeType.ALL)
-	//Associacao cliente tem varios enderecos
-	private List<Endereco>enderecos = new ArrayList<>();
-	
+
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	// Associacao cliente tem varios enderecos
+	private List<Endereco> enderecos = new ArrayList<>();
+
 	@ElementCollection
-	@CollectionTable(name= "TELEFONE")
-	//Aqui coloco telefone, por um conjunto de strings
-	private Set <String> telefones = new HashSet<>();
-	
-	//o cliente tem que conhecer os pedidos
-	@JsonIgnore//Os pedidos de um cliente nao vai ser serializados
-	@OneToMany(mappedBy= "cliente")
+	@CollectionTable(name = "TELEFONE")
+	// Aqui coloco telefone, por um conjunto de strings
+	private Set<String> telefones = new HashSet<>();
+
+	// Acrescentar a tabela perfis na base de dados.
+	@ElementCollection(fetch = FetchType.EAGER) // Garantir que os dados do perfil vira tambem.
+	@CollectionTable(name = "PERFIS")
+	private Set<Integer> perfis = new HashSet<>();
+
+	// o cliente tem que conhecer os pedidos
+	@JsonIgnore // Os pedidos de um cliente nao vai ser serializados
+	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
-	
-	//Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
-	@SuppressWarnings("unused")
-	private Cliente () {
+
+	// Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
+	public Cliente() {
 		
+		addPerfil(Perfil.CLIENTE);
 	}
 
-	//Metodo Construtor com os parametros, - colecao
+	// Metodo Construtor com os parametros, - colecao
 	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
+
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -66,10 +77,11 @@ public class Cliente implements Serializable {
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipo = (tipo == null) ? null : tipo.getCod();
 		this.senha = senha;
+		addPerfil(Perfil.CLIENTE);
+		
 	}
-	
-	
-    //getters e setters
+
+	// getters e setters
 	public Integer getId() {
 		return id;
 	}
@@ -125,7 +137,7 @@ public class Cliente implements Serializable {
 	public void setTelefones(Set<String> telefones) {
 		this.telefones = telefones;
 	}
-	
+
 	public List<Pedido> getPedidos() {
 		return pedidos;
 	}
@@ -133,7 +145,7 @@ public class Cliente implements Serializable {
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
-	
+
 	public String getSenha() {
 		return senha;
 	}
@@ -142,7 +154,19 @@ public class Cliente implements Serializable {
 		this.senha = senha;
 	}
 
-	//HashCode e Equals, em java para que dois objetos possam ser comparados pelo seu conteudo e nao pela memoria.
+	// Metodo set para configurar o perfil, chamando o enum
+	public Set<Perfil> getPerfis() {
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());// Com isso retorna os perfis do
+																						// cliente.
+	}
+
+	// Metodo para adicionar um novo perfil
+	public void addPerfil(Perfil perfil) {
+		perfis.add(perfil.getCod());
+	}
+
+	// HashCode e Equals, em java para que dois objetos possam ser comparados pelo
+	// seu conteudo e nao pela memoria.
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -167,6 +191,5 @@ public class Cliente implements Serializable {
 			return false;
 		return true;
 	}
-
 
 }

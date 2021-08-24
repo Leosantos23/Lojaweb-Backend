@@ -2,6 +2,7 @@ package com.leandro.lojaweb.services;
 
 import java.util.Date;
 
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
@@ -44,7 +45,7 @@ public abstract class AbstractEmailService implements EmailService {
 		// Remetente
 		sm.setFrom(sender);
 		// Assunto
-		sm.setSubject("Pedido confirmado! Codigo: " + obj.getId());
+		sm.setSubject("Pedido confirmado! Numero: " + obj.getId());
 		// Data e horario do servidor
 		sm.setSentDate(new Date(System.currentTimeMillis()));
 		// Mensagem do email

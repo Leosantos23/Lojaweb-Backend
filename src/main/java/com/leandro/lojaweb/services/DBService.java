@@ -19,6 +19,7 @@ import com.leandro.lojaweb.domain.PagamentoComBoleto;
 import com.leandro.lojaweb.domain.PagamentoComCartao;
 import com.leandro.lojaweb.domain.Pedido;
 import com.leandro.lojaweb.domain.Produto;
+import com.leandro.lojaweb.domain.enums.Perfil;
 import com.leandro.lojaweb.domain.enums.StatusPagamento;
 import com.leandro.lojaweb.domain.enums.TipoCliente;
 import com.leandro.lojaweb.repositories.CategoriaRepository;
@@ -142,22 +143,28 @@ public class DBService {
 
 		// Instancias de Clientes
 		Cliente cli1 = new Cliente(null, "Leandro Moreira", "lesoft.com@gmail.com", "97778845632", TipoCliente.PESSOAFISICA, pe.encode("123"));
-
 		// Aqui instancio os telefones do cliente
 		cli1.getTelefones().addAll(Arrays.asList("999090935", "992213331"));
-
+		
+		Cliente cli2 = new Cliente(null, "Deisa Machado", "deisa.com@gmail.com", "31628382740", TipoCliente.PESSOAFISICA, pe.encode("123"));
+		cli2.getTelefones().addAll(Arrays.asList("999090933", "992213333"));// Aqui instancio os telefones do cliente
+		cli2.addPerfil(Perfil.ADMIN);// Adicionar como admim
+		
+		
 		// Instancias de endereco
 		Endereco e1 = new Endereco(null, "Rua rp10", "s/n", "Qd 21, Lt 06", "Jardim Paraiso", "75456224", cli1, c1);
 		Endereco e2 = new Endereco(null, "Rua rp13", "s/n", "Qd 20, Lt 26", "Jardim Flores", "75454724", cli1, c2);
+		Endereco e3 = new Endereco(null, "Rua rp14", "234", null, "Jardim Florenca", "75454725", cli2, c2);
 
 		// Associar o cliente tem que conhecer o endereco dele
 		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
-
+		cli2.getEnderecos().addAll(Arrays.asList(e3));
+		
 		// Salvar os cliente no banco de dados
-		clienteRepository.saveAll(Arrays.asList(cli1));
+		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
 
 		// Salvar os enderecos no banco de dados
-		enderecoRepository.saveAll(Arrays.asList(e1, e2));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2, e3));
 
 		// Formatar a data
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");

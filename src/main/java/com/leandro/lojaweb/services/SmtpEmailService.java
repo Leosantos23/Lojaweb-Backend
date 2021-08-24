@@ -13,10 +13,9 @@ public class SmtpEmailService extends AbstractEmailService {
 
 	@Autowired // Para injetar a instancia referente la no check list
 	private MailSender mailSender;
-	
-	@Autowired//Inject de java mail sender
+
+	@Autowired // Inject de java mail sender
 	private JavaMailSender javaMailSender;
-	
 
 	// Logger
 	private static final Logger LOG = LoggerFactory.getLogger(SmtpEmailService.class);
@@ -32,7 +31,7 @@ public class SmtpEmailService extends AbstractEmailService {
 	public void sendHtmlEmail(MimeMessage msg) {
 
 		LOG.info("Enviando email...");
-		javaMailSender.send(msg);//Agora terei de usar a injection
+		javaMailSender.send(msg);// Agora terei de usar a injection
 		LOG.info("Email enviado!");
 
 	}
