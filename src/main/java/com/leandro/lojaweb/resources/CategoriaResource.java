@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,7 @@ public class CategoriaResource {
 	 * formato JSON , e inseris esta categoria no banco.
 	 */
 	@RequestMapping(method=RequestMethod.POST)
+	@PreAuthorize("hasAnyRole('ADMIN')")// Autorizo somente o admin
 	public ResponseEntity<Void> insert (@Valid @RequestBody CategoriaDTO objDTO) {
 		//Aqui antes terei de converter um objeto DTO para um objeto ENTITY
 		Categoria obj = service.fromDTO(objDTO);
@@ -52,6 +54,7 @@ public class CategoriaResource {
 	
 	//Este metodo tem a funcionalidade de ATUALIZAR uma categoria no banco de dados com o PUT.
 	@RequestMapping(value= "/{id}", method=RequestMethod.PUT)//Para que este metodo seja REST tenho que associar a algum verbo HTTP (GET, POST, PUT etc).
+	@PreAuthorize("hasAnyRole('ADMIN')")// Autorizo somente o admin
 	public ResponseEntity<Void> update (@Valid @RequestBody CategoriaDTO objDTO, @PathVariable Integer id ){
 		//Aqui antes terei de converter um objeto DTO para um objeto ENTITY
 		Categoria obj = service.fromDTO(objDTO);
@@ -62,6 +65,7 @@ public class CategoriaResource {
 	
 	//Este metodo tem a funcionalidade de APAGAR uma categoria no banco de dados com o DELETE.
 	@RequestMapping(value= "/{id}", method=RequestMethod.DELETE)//Para que este metodo seja REST tenho que associar a algum verbo HTTP (GET, POST, PUT etc).
+	@PreAuthorize("hasAnyRole('ADMIN')")// Autorizo somente o admin
 	public ResponseEntity<Void> delete (@PathVariable Integer id) {
 	service.delete(id);
 	return ResponseEntity.noContent().build();

@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,6 +64,7 @@ public class ClienteResource {
 		
 		//Este metodo tem a funcionalidade de APAGAR uma categoria no banco de dados com o DELETE.
 		@RequestMapping(value= "/{id}", method=RequestMethod.DELETE)//Para que este metodo seja REST tenho que associar a algum verbo HTTP (GET, POST, PUT etc).
+		@PreAuthorize("hasAnyRole('ADMIN')")// Autorizo somente o admin
 		public ResponseEntity<Void> delete (@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
@@ -70,6 +72,7 @@ public class ClienteResource {
 		
 		//Listar todas as categorias, sem mostrar os produtos com o DTO.
 		@RequestMapping(method=RequestMethod.GET)
+		@PreAuthorize("hasAnyRole('ADMIN')")// Autorizo somente o admin
 		public ResponseEntity<List<ClienteDTO>> buscarTodas () {
 			List<Cliente> list = service.buscarTodos();//Aqui busco a lista do banco e  terei de converter para uma lista DTO.
 			//Com este codigo abaixo, eu consigo converter uma lista, para outra lista.
@@ -80,6 +83,7 @@ public class ClienteResource {
 		
 		//Listar todas as categorias, em paginas.
 		@RequestMapping(value="/pagina", method=RequestMethod.GET)
+		@PreAuthorize("hasAnyRole('ADMIN')")// Autorizo somente o admin
 		public ResponseEntity<Page<ClienteDTO>> buscarPagina (
 				@RequestParam(value="pagina", defaultValue= "0") Integer pagina,
 				@RequestParam(value="linhas", defaultValue= "24") Integer linhas, 

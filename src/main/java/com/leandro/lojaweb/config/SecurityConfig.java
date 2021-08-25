@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -24,6 +25,7 @@ import com.leandro.lojaweb.security.JWTUtil;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	//Para o banco h2
@@ -45,8 +47,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final String[] PUBLIC_MATCHERS_GET = {
 			"/produtos/**",
 			"/categorias/**",
-			"/clientes/**"
 	};
+	
+	// Apenas no post
+	private static final String[] PUBLIC_MATCHERS_POST = {
+			"/clientes/**",
+			"/auth/forgot/**"
+	};
+
 
 
 	// Agora vou sobescrever o metodo de WebSecurityConfigurerAdapter
@@ -64,6 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and().csrf().disable();
 		// Vou comecar acessando o objeto http
 		http.authorizeRequests()
+		.antMatchers(HttpMethod.POST,PUBLIC_MATCHERS_GET).permitAll()//Defino que é so para o metodo GET.
 		.antMatchers(HttpMethod.GET,PUBLIC_MATCHERS_GET).permitAll()//Defino que é so para o metodo GET.
 		.antMatchers(PUBLIC_MATCHERS).permitAll()
 		.anyRequest()
