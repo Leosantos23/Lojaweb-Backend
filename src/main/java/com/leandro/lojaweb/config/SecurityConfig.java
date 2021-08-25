@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.leandro.lojaweb.security.JWTAuthenticationFilter;
+import com.leandro.lojaweb.security.JWTAuthorizationFilter;
 import com.leandro.lojaweb.security.JWTUtil;
 
 @Configuration
@@ -70,6 +71,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		//Para passar pelo filtro de autenticacao
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+		
+		//Para passar pelo filtro de autorizacao
+		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService ));
 		
 		//Para assegurar que o back end nao vai criar sessao de usuario
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
