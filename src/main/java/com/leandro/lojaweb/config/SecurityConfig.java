@@ -41,22 +41,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// Definir um vetor de strings
 	private static final String[] PUBLIC_MATCHERS = {
 			// Definir quais caminhos que por padroes estarao liberados
-			"/h2-console/**"};
+			"/h2-console/**",
+			"/clientes/**",
+			"/auth/forgot/**"
+			};
 	
-	//Outro vetor com os caminhos apenasde leitura para aumentar a seguranca
+	//Outro vetor com os caminhos apenas de leitura para aumentar a seguranca
 	private static final String[] PUBLIC_MATCHERS_GET = {
 			"/produtos/**",
 			"/categorias/**",
+			"/status/**"
 	};
 	
-	// Apenas no post
-	private static final String[] PUBLIC_MATCHERS_POST = {
-			"/clientes/**",
-			"/auth/forgot/**"
-	};
-
-
-
 	// Agora vou sobescrever o metodo de WebSecurityConfigurerAdapter
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {

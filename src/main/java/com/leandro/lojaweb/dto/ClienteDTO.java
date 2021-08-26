@@ -26,6 +26,7 @@ public class ClienteDTO  implements Serializable {
 	
 	//Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
 	//Alem disso algumas bibliotecas precisa dele.
+	@SuppressWarnings("unused")
 	private ClienteDTO () {
 		
 	}

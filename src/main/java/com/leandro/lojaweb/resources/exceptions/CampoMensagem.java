@@ -10,6 +10,7 @@ public class CampoMensagem implements Serializable {
 	private String mensagem;
 	
 	//Metodo construtor vazio
+	@SuppressWarnings("unused")
 	private CampoMensagem () {
 		
 	}
