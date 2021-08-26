@@ -1,7 +1,6 @@
 package com.leandro.lojaweb.services;
 
 import java.util.List;
-
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -17,11 +16,14 @@ import org.springframework.stereotype.Service;
 import com.leandro.lojaweb.domain.Cidade;
 import com.leandro.lojaweb.domain.Cliente;
 import com.leandro.lojaweb.domain.Endereco;
+import com.leandro.lojaweb.domain.enums.Perfil;
 import com.leandro.lojaweb.domain.enums.TipoCliente;
 import com.leandro.lojaweb.dto.ClienteDTO;
 import com.leandro.lojaweb.dto.ClienteNewDTO;
 import com.leandro.lojaweb.repositories.ClienteRepository;
 import com.leandro.lojaweb.repositories.EnderecoRepository;
+import com.leandro.lojaweb.security.UserSpringSecurity;
+import com.leandro.lojaweb.services.exceptions.AuthorizationException;
 import com.leandro.lojaweb.services.exceptions.DataIntegrityException;
 import com.leandro.lojaweb.services.exceptions.ObjectNotFoundException;
 
@@ -41,6 +43,13 @@ public class ClienteService {
 
 	// Aqui vou fazer uma funcao de buscar a Cliente por ID.
 	public Cliente buscar(Integer id) {
+		
+		UserSpringSecurity user = UserService.authenticated();
+		// Testar com if
+		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado!");
+		}
+
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));

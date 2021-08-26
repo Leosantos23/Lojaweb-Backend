@@ -79,5 +79,11 @@ public class UserSpringSecurity implements UserDetails {
 
 		return true;// Falo que minha conta tambem esta ativa.
 	}
+	
+	// Metodo hasRole para ser tratado la no metodo buscar em ClienteService
+	public boolean hasRole(Perfil perfil) {
+		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
+	}
+
 
 }
