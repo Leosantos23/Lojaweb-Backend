@@ -7,17 +7,21 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.leandro.lojaweb.domain.Cliente;
 import com.leandro.lojaweb.domain.ItemPedido;
 import com.leandro.lojaweb.domain.PagamentoComBoleto;
 import com.leandro.lojaweb.domain.Pedido;
 import com.leandro.lojaweb.domain.enums.StatusPagamento;
-import com.leandro.lojaweb.repositories.ClienteRepository;
 import com.leandro.lojaweb.repositories.ItemPedidoRepository;
 import com.leandro.lojaweb.repositories.PagamentoRepository;
 import com.leandro.lojaweb.repositories.PedidoRepository;
-import com.leandro.lojaweb.repositories.ProdutoRepository;
+import com.leandro.lojaweb.security.UserSpringSecurity;
+import com.leandro.lojaweb.services.exceptions.AuthorizationException;
 import com.leandro.lojaweb.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -88,10 +92,24 @@ public class PedidoService {
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
-		//emailService.sendOrderConfirmationEmail(obj);
+		// emailService.sendOrderConfirmationEmail(obj);
 		emailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
-
 	}
 
+	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+
+		UserSpringSecurity user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado!");
+
+		}
+
+		//Para fazer uma consulta e retornar uma pagina de dados, e preciso fazer outro objeto do tipo PAGEREQUEST
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),orderBy);
+		
+		Cliente cliente = clienteService.buscar(user.getId());
+		return repo.findByCliente(cliente, pageRequest);
+
+	}
 }
