@@ -1,5 +1,6 @@
 package com.leandro.lojaweb.services;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.leandro.lojaweb.domain.Cidade;
 import com.leandro.lojaweb.domain.Cliente;
@@ -41,12 +43,15 @@ public class ClienteService {
 	@Autowired
 	private BCryptPasswordEncoder pe;
 
+	@Autowired
+	private S3Service s3Service;
+
 	// Aqui vou fazer uma funcao de buscar a Cliente por ID.
 	public Cliente buscar(Integer id) {
-		
+
 		UserSpringSecurity user = UserService.authenticated();
 		// Testar com if
-		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
 			throw new AuthorizationException("Acesso negado!");
 		}
 
@@ -133,6 +138,12 @@ public class ClienteService {
 
 		newObj.setNome(obj.getNome());
 		newObj.setEmail(obj.getEmail());
+	}
+
+	// Metodo para fazer o upload da foto de perfil do cliente
+	public URI uploadProfilePicture(MultipartFile multipartFile) {
+
+		return s3Service.uploadFile(multipartFile);
 	}
 
 }

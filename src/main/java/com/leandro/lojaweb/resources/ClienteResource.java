@@ -1,6 +1,7 @@
 package com.leandro.lojaweb.resources;
 
 import java.net.URI;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.leandro.lojaweb.domain.Cliente;
@@ -24,7 +26,7 @@ import com.leandro.lojaweb.dto.ClienteNewDTO;
 import com.leandro.lojaweb.services.ClienteService;
 
 @RestController//Anotacao controladora REST
-@RequestMapping(value="/clientes")//Aqui eu coloco o nome do end point REST
+@RequestMapping(value="/clientes")//Aqui e a url de base /clientes
 public class ClienteResource {
 	
 	@Autowired//Para instanciar automaticamente
@@ -95,5 +97,13 @@ public class ClienteResource {
 			//Abaixo passo o argumento listDTO para meu response.
 			return ResponseEntity.ok().body(pageDTO);
 		}
+		
+		// End point para adicionar foto ao perfil
+		@RequestMapping(value="/picture", method=RequestMethod.POST)
+		public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name="file") MultipartFile file) {
+			URI uri = service.uploadProfilePicture(file);
+			return ResponseEntity.created(uri).build();
+		}
+
 
 }

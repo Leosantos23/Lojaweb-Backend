@@ -41,34 +41,38 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// Definir um vetor de strings
 	private static final String[] PUBLIC_MATCHERS = {
 			// Definir quais caminhos que por padroes estarao liberados
-			"/h2-console/**",
-			"/clientes/**",
-			"/auth/forgot/**"
+			"/h2-console/**"
 			};
 	
 	//Outro vetor com os caminhos apenas de leitura para aumentar a seguranca
 	private static final String[] PUBLIC_MATCHERS_GET = {
 			"/produtos/**",
-			"/categorias/**",
-			"/status/**"
+			"/categorias/**"
 	};
+	
+	private static final String[] PUBLIC_MATCHERS_POST = {
+			"/clientes",
+			"/clientes/picture",
+			"/auth/forgot/**"
+	};
+
 	
 	// Agora vou sobescrever o metodo de WebSecurityConfigurerAdapter
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
-		//Para tratar o em caso do h2ser usado
+		//Para tratar o em caso do h2 ser usado
 		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
 			http.headers().frameOptions().disable();
 		}
 		
 		//Para que o bean abaixo seja ativado
 		http.cors()
-		//Para desativarataques de CSRF
+		//Para desativar ataques de CSRF
 		.and().csrf().disable();
 		// Vou comecar acessando o objeto http
 		http.authorizeRequests()
-		.antMatchers(HttpMethod.POST,PUBLIC_MATCHERS_GET).permitAll()//Defino que é so para o metodo GET.
+		.antMatchers(HttpMethod.POST,PUBLIC_MATCHERS_POST).permitAll()//Defino que é so para o metodo POST.
 		.antMatchers(HttpMethod.GET,PUBLIC_MATCHERS_GET).permitAll()//Defino que é so para o metodo GET.
 		.antMatchers(PUBLIC_MATCHERS).permitAll()
 		.anyRequest()
