@@ -61,9 +61,6 @@ public class Cliente implements Serializable {
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
-	// Atributo de imagem
-	private String imageUrl;
-
 	// Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
 	public Cliente() {
 		
@@ -193,15 +190,6 @@ public class Cliente implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-
-	// Getters e setters de image
-	public String getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
 	}
 
 }
