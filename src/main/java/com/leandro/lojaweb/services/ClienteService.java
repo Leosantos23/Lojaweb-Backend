@@ -5,8 +5,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -15,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.leandro.lojaweb.domain.Cidade;
@@ -34,8 +33,7 @@ import com.leandro.lojaweb.services.exceptions.ObjectNotFoundException;
 @Service
 public class ClienteService {
 
-	@Autowired // Aqui eu instancio o repositorio (repo) abaixo, que na qual sera
-				// automaticamente instanciada pelo SPRING.
+	@Autowired // Aqui eu instancio o repositorio (repo) abaixo, que na qual sera automaticamente instanciada pelo SPRING.
 	// Pelo mecanismo de injecao de dependencias, ou inversao de controle.
 	private ClienteRepository repo;// Aqui declaro uma dependencia de um objeto do tipo cliente.
 
@@ -51,8 +49,13 @@ public class ClienteService {
 	@Autowired
 	private ImageService imageService;
 
+	// Puxo o valor que esta la no aplication.properties para a variavel abaixo.
 	@Value("${img.prefix.client.profile}")
 	private String prefix;
+	
+	// Puxo o valor que esta la no aplication.properties para a variavel abaixo.
+	@Value("${img.profile.size}")
+	private Integer size;
 
 	// Aqui vou fazer uma funcao de buscar a Cliente por ID.
 	public Cliente buscar(Integer id) {
@@ -158,6 +161,12 @@ public class ClienteService {
 		}
 
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+		
+		// Recorto a imagem.
+		jpgImage = imageService.cropSquare(jpgImage);
+		// Redimensiono a imagem.
+		jpgImage = imageService.resize(jpgImage, size);
+
 
 		// Montar o nome do arquivo personalizado com base no cliente que esta logado.
 		String fileName = prefix + user.getId() + ".jpg";

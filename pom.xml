@@ -90,6 +90,12 @@
 			<artifactId>commons-io</artifactId>
 			<version>LATEST</version>
 		</dependency>
+		<!-- Dependencia do imgscalr para ajustar e recortar e redimensionar a nossa imagem de perfil -->
+		<dependency>
+			<groupId>org.imgscalr</groupId>
+			<artifactId>imgscalr-lib</artifactId>
+			<version>4.2</version>
+		</dependency>
 		
 	</dependencies>
 
