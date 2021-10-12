@@ -59,6 +59,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		String username = ((UserSpringSecurity) auth.getPrincipal()).getUsername();
 		String token = jwtUtil.generateToken(username);
 		res.addHeader("Authorization", "Bearer " + token);
+		// Para tratamento de erro de cors 
+		res.addHeader("access-control-expose-headers", "Authorization");
 	}
 	
 	// Adaptacao para a versao 2.x.x do spring , quanto ao erro 403
