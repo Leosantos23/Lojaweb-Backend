@@ -39,6 +39,13 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	// Endpoint de busca por email
+	@RequestMapping(value="/email", method=RequestMethod.GET)
+	public ResponseEntity<Cliente> find(@RequestParam(value="value") String email) {
+		Cliente obj = service.findByEmail(email);
+		return ResponseEntity.ok().body(obj);
+	}
+	
 	/*Este metodo tera de chamar a opcao que SALVAR/ INSERIR uma nova categoria no banco de dados ja com POST, este metodo recebera uma categoria no 
 	 * formato JSON , e inseris esta categoria no banco.
 	 */
