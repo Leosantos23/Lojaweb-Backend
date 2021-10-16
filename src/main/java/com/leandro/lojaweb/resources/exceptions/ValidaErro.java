@@ -8,10 +8,9 @@ public class ValidaErro extends StandardError {
 	
 	private List<CampoMensagem> erros = new ArrayList<>();
 	
-	//Metodo construtor
-	public ValidaErro(Integer status, String mensagem, Long timeStamp) {
-		super(status, mensagem, timeStamp);
-		
+	//Metodo construtor com parametros
+	public ValidaErro(Long timestamp, Integer status, String error, String message, String path) {
+		super(timestamp, status, error, message, path);
 	}
 
 	//getters e setters
