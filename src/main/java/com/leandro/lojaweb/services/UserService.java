@@ -6,8 +6,7 @@ import com.leandro.lojaweb.security.UserSpringSecurity;
 
 public class UserService {
 
-	// Metodo estatico, porque vai ser chamado independente de instanciar a classe
-	// UserService
+	// Metodo estatico, porque vai ser chamado independente de instanciar a classe UserService
 	public static UserSpringSecurity authenticated() {
 		try {
 

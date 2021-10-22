@@ -235,15 +235,14 @@ public class DBService {
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
 		// Instancias de Clientes
-		Cliente cli1 = new Cliente(null, "Leandro Moreira", "lesoft.com@gmail.com", "97778845632",
-				TipoCliente.PESSOAFISICA, pe.encode("123"));
+		Cliente cli1 = new Cliente(null, "Leandro Moreira", "lesoft.com@gmail.com", "97778845632", TipoCliente.PESSOAFISICA, pe.encode("123"));
 		// Aqui instancio os telefones do cliente
 		cli1.getTelefones().addAll(Arrays.asList("999090935", "992213331"));
+		// Adicionar como admim
+		cli1.addPerfil(Perfil.ADMIN);
 
-		Cliente cli2 = new Cliente(null, "Deisa Machado", "deisa.com@gmail.com", "31628382740",
-				TipoCliente.PESSOAFISICA, pe.encode("123"));
+		Cliente cli2 = new Cliente(null, "Deisa Machado", "deisa.com@gmail.com", "31628382740", TipoCliente.PESSOAFISICA, pe.encode("123"));
 		cli2.getTelefones().addAll(Arrays.asList("999090933", "992213333"));// Aqui instancio os telefones do cliente
-		cli2.addPerfil(Perfil.ADMIN);// Adicionar como admim
 
 		// Instancias de endereco
 		Endereco e1 = new Endereco(null, "Rua rp10", "s/n", "Qd 21, Lt 06", "Jardim Paraiso", "75456224", cli1, c1);

@@ -58,7 +58,7 @@ public class ClienteService {
 	private Integer size;
 
 	// Aqui vou fazer uma funcao de buscar a Cliente por ID.
-	public Cliente buscar(Integer id) {
+	public Cliente find(Integer id) {
 
 		UserSpringSecurity user = UserService.authenticated();
 		// Testar com if
@@ -85,7 +85,7 @@ public class ClienteService {
 	// Metodo update
 	public Cliente update(Cliente obj) {
 
-		Cliente newObj = buscar(obj.getId());// Busca e se der erro, ja lanca uma excessao.
+		Cliente newObj = find(obj.getId());// Busca e se der erro, ja lanca uma excessao.
 		updateData(newObj, obj);// Foi criado outro metodo auxiliar
 		return repo.save(newObj);// Esse metodo tera de retornar o repositorio.
 
@@ -93,7 +93,7 @@ public class ClienteService {
 
 	public void delete(Integer id) {
 
-		buscar(id);// Busca e se der erro, ja lanca uma excessao.
+		find(id);// Busca e se der erro, ja lanca uma excessao.
 		try {
 			repo.deleteById(id);// Aqui apaga pelo id
 		} catch (DataIntegrityViolationException e) {
@@ -106,17 +106,17 @@ public class ClienteService {
 	}
 
 	// Metodo listar todas Clientes
-	public List<Cliente> buscarTodos() {
+	public List<Cliente> findAll() {
 
 		return repo.findAll();
 	}
 
-	// Metodo responsavel por paginar os clientes e mostrar organizadas osando o
+	// Metodo responsavel por paginar os clientes e mostrar organizadas usando o
 	// PAGE
-	public Page<Cliente> buscarPagina(Integer pagina, Integer linhas, String ordem, String direcao) {
+	public Page<Cliente> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		// Para fazer uma consulta e retornar uma pagina de dados, e preciso fazer outro
 		// objeto do tipo PAGEREQUEST
-		PageRequest pageRequest = PageRequest.of(pagina, linhas, Direction.valueOf(direcao), ordem);
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
 	}
 	

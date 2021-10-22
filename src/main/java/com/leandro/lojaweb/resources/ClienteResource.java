@@ -35,7 +35,7 @@ public class ClienteResource {
 	@RequestMapping(value= "/{id}", method=RequestMethod.GET)//Para que este metodo seja REST tenho que associar a algum verbo HTTP (GET, POST, etc)
 	public ResponseEntity<Cliente> find (@PathVariable Integer id) {
 		
-		Cliente obj = service.buscar(id);//Aqui chamo o obj o service ao metodo  buscar, repassando o id.
+		Cliente obj = service.find(id);//Aqui chamo o obj o service ao metodo  buscar, repassando o id.
 		return ResponseEntity.ok().body(obj);
 	}
 	
@@ -83,7 +83,7 @@ public class ClienteResource {
 		@RequestMapping(method=RequestMethod.GET)
 		@PreAuthorize("hasAnyRole('ADMIN')")// Autorizo somente o admin
 		public ResponseEntity<List<ClienteDTO>> buscarTodas () {
-			List<Cliente> list = service.buscarTodos();//Aqui busco a lista do banco e  terei de converter para uma lista DTO.
+			List<Cliente> list = service.findAll();//Aqui busco a lista do banco e  terei de converter para uma lista DTO.
 			//Com este codigo abaixo, eu consigo converter uma lista, para outra lista.
 			List<ClienteDTO> listDTO = list.stream().map(obj -> new ClienteDTO(obj)).collect(Collectors.toList());
 			//Abaixo passo o argumento listDTO para meu response.
@@ -91,16 +91,16 @@ public class ClienteResource {
 		}
 		
 		//Listar todas as categorias, em paginas.
-		@RequestMapping(value="/pagina", method=RequestMethod.GET)
+		@RequestMapping(value="/page", method=RequestMethod.GET)
 		@PreAuthorize("hasAnyRole('ADMIN')")// Autorizo somente o admin
-		public ResponseEntity<Page<ClienteDTO>> buscarPagina (
-				@RequestParam(value="pagina", defaultValue= "0") Integer pagina,
-				@RequestParam(value="linhas", defaultValue= "24") Integer linhas, 
-				@RequestParam(value="ordem", defaultValue= "nome") String ordem, 
-				@RequestParam(value="direcao", defaultValue= "ASC") String direcao) {
-			Page<Cliente> page = service.buscarPagina(pagina, linhas, ordem, direcao);//Aqui busco a lista do banco e  terei de converter para uma pagina DTO.
+		public ResponseEntity<Page<ClienteDTO>> findPage (
+				@RequestParam(value="page", defaultValue= "0") Integer page,
+				@RequestParam(value="linesPerPage", defaultValue= "24") Integer linesPerPage, 
+				@RequestParam(value="orderBy", defaultValue= "name") String orderBy, 
+				@RequestParam(value="direction", defaultValue= "ASC") String direction) {
+			Page<Cliente> list = service.findPage(page, linesPerPage, orderBy, direction);//Aqui busco a lista do banco e  terei de converter para uma pagina DTO.
 			//Com este codigo abaixo, eu consigo converter uma pagina, para outra pagina.
-			Page<ClienteDTO> pageDTO = page.map(obj -> new ClienteDTO(obj));
+			Page<ClienteDTO> pageDTO = list.map(obj -> new ClienteDTO(obj));
 			//Abaixo passo o argumento listDTO para meu response.
 			return ResponseEntity.ok().body(pageDTO);
 		}

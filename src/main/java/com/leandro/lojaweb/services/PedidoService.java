@@ -65,7 +65,7 @@ public class PedidoService {
 		obj.setId(null);
 
 		// Setar o cliente ao pedido.
-		obj.setCliente(clienteService.buscar(obj.getCliente().getId()));
+		obj.setCliente(clienteService.find(obj.getCliente().getId()));
 
 		// Setar o instante desse pedido como sendo um new date, que garante uma nova
 		// data com o momento atual.
@@ -108,7 +108,7 @@ public class PedidoService {
 		//Para fazer uma consulta e retornar uma pagina de dados, e preciso fazer outro objeto do tipo PAGEREQUEST
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),orderBy);
 		
-		Cliente cliente = clienteService.buscar(user.getId());
+		Cliente cliente = clienteService.find(user.getId());
 		return repo.findByCliente(cliente, pageRequest);
 
 	}
