@@ -20,8 +20,7 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Entity // Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do
-		// banco de dados
+@Entity // Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
 public class Pedido implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -33,10 +32,9 @@ public class Pedido implements Serializable {
 	private Date instante;
 
 	// Relacionamento com pagamento
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido") // Relacionamento um para um, usei CASCADE, porque senao
-																// da um erra de entidade
-	// transiente quando vai salvar um pedido e o pagamento dele, e uma
-	// peculiaridade do JPA.
+	// Relacionamento um para um, usei CASCADE, porque senao da um erro de entidade
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido") 
+	// transiente quando vai salvar um pedido e o pagamento dele, e uma peculiaridade do JPA
 	private Pagamento pagamento;
 
 	// Relacionamento com cliente
@@ -54,8 +52,7 @@ public class Pedido implements Serializable {
 	private Set<ItemPedido> itens = new HashSet<>();// O Set me garante que nao tera o mesmo item repetido no mesmo
 													// pedido.
 
-	// Metodo Construtor vazio, que instancio um objeto sem jogar nada para os
-	// atributos principais
+	// Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
 	public Pedido() {
 
 	}
@@ -78,7 +75,7 @@ public class Pedido implements Serializable {
 		return soma;
 	}
 
-	// getters e setters
+	// Getters e setters
 	public Integer getId() {
 		return id;
 	}
@@ -127,8 +124,7 @@ public class Pedido implements Serializable {
 		this.itens = itens;
 	}
 
-	// HashCode e Equals, em java para que dois objetos possam ser comparados pelo
-	// seu conteudo e nao pela memoria.
+	// HashCode e Equals, em java para que dois objetos possam ser comparados pelo seu conteudo e nao pela memoria
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -160,8 +156,8 @@ public class Pedido implements Serializable {
 
 		// Para formatar o valor bonitinho
 		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-		
-		//Para formatar a data do pedido bonitinha
+
+		// Para formatar a data do pedido bonitinha
 		SimpleDateFormat sd = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
 		StringBuilder builder = new StringBuilder();

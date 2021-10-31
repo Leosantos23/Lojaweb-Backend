@@ -49,8 +49,7 @@ public class ClienteNewDTO implements Serializable {
 	@NotEmpty(message = "Campo obrigatorio!")
 	private String senha;
 
-	// Metodo Construtor vazio, que instancio um objeto sem jogar nada para os
-	// atributos principais
+	// Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
 	public ClienteNewDTO() {
 
 	}

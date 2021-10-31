@@ -12,34 +12,35 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity//Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
+@Entity // Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
 public class Estado implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	//atributos basicos
+
+	// Atributos basicos
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)//Definindo a geracao automatica dos ids das categorias
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Definindo a geracao automatica dos ids das categorias
 	private Integer id;
 	private String nome;
-	
-	//Associacoes e relacionamentos, um estado tem varias cidades
-	@JsonIgnore//aqui nao deixo serializar as cidades, sera omitido
-	@OneToMany(mappedBy= "estado")//o Inverso da associacao em cidade
+
+	// Associacoes e relacionamentos, um estado tem varias cidades
+	@JsonIgnore // Aqui nao deixo serializar as cidades, sera omitido
+	@OneToMany(mappedBy = "estado") // O Inverso da associacao em cidade
 	private List<Cidade> cidades = new ArrayList<>();
-	
-	//Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
+
+	// Metodo Construtor vazio, que instancio um objeto sem jogar nada para os
+	// Atributos principais
 	public Estado() {
-		
+
 	}
 
-	//Metodo Construtor com os parametros, - colecao
+	// Metodo Construtor com os parametros, - colecao
 	public Estado(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
 	}
 
-	//getters e setters
+	// Getters e setters
 	public Integer getId() {
 		return id;
 	}
@@ -64,7 +65,7 @@ public class Estado implements Serializable {
 		this.cidades = cidades;
 	}
 
-	//HashCode e Equals, em java para que dois objetos possam ser comparados pelo seu conteudo e nao pela memoria.
+	// HashCode e Equals, em java para que dois objetos possam ser comparados pelo seu conteudo e nao pela memoria
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -89,5 +90,5 @@ public class Estado implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 }

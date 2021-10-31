@@ -17,56 +17,58 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity//aqui faco tambem o mapeamento dizendo que sera uma entidade tambem.
+@Entity // aqui faco tambem o mapeamento dizendo que sera uma entidade tambem.
 public class Produto implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	private Double preco;
-	
-	@JsonIgnore//Mostra que do outro lado da associacao ja foi buscada, portanto nao busca mais.
-	//Aqui faco associacoes de um ou mais produto para muitas categorias
+
+	// Mostra que do outro lado da associacao ja foi buscada, portanto nao busca mais
+	@JsonIgnore 
+	// Aqui faco associacoes de um ou mais produto para muitas categorias
 	@ManyToMany
-	@JoinTable(name = "PRODUTO_CATEGORIA", 
-	joinColumns = @JoinColumn(name="produto_id"),
-	inverseJoinColumns = @JoinColumn(name= "categoria_id"))
-	private List <Categoria> categorias = new ArrayList<>();
-	
-	//Aqui a classe pedido tem que conhecer os itens associado a ela.
-	@JsonIgnore//Nao sera serializado
-	@OneToMany(mappedBy= "id.produto")
-	private Set<ItemPedido> itens = new HashSet<>();//O Set me garante que nao tera o mesmo item repetido no mesmo pedido.
-	
-	//Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
+	@JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
+	private List<Categoria> categorias = new ArrayList<>();
+
+	// Aqui a classe pedido tem que conhecer os itens associado a ela.
+	@JsonIgnore // Nao sera serializado
+	@OneToMany(mappedBy = "id.produto")
+	// O Set me garante que nao tera o mesmo item repetido no mesmo pedido
+	private Set<ItemPedido> itens = new HashSet<>();
+
+	// Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
 	public Produto() {
-		
+
 	}
 
-	//Metodo Construtor com os parametros, - colecao
+	// Metodo Construtor com os parametros, - colecao
 	public Produto(Integer id, String nome, Double preco) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
 	}
-	
-	//Um produto conhece os pedidos dele, 
-	@JsonIgnore//Foi nescessario ignorar a serializacao, senao sera serializado os pedidos associados ao produto,
-	//resultando em referencia ciclica. Pois tudo com get e serializado.
-	public List<Pedido> getPedidos(){
+
+	/* Um produto conhece os pedidos dele, foi nescessario ignorar a serializacao, 
+	 * senao sera serializado os pedidos associados ao produto, resultando em referencia ciclica
+	 *  Pois tudo com get e serializado
+	 */
+	@JsonIgnore 
+	public List<Pedido> getPedidos() {
 		List<Pedido> lista = new ArrayList<>();
-		
-		//Vou percorrer minha lista de itens
-		for(ItemPedido x : itens) {
+
+		// Vou percorrer minha lista de itens
+		for (ItemPedido x : itens) {
 			lista.add(x.getPedido());
 		}
 		return lista;
 	}
 
-	//getters e setters
+	// Getters e setters
 	public Integer getId() {
 		return id;
 	}
@@ -98,7 +100,7 @@ public class Produto implements Serializable {
 	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
 	}
-	
+
 	public Set<ItemPedido> getItens() {
 		return itens;
 	}
@@ -107,7 +109,7 @@ public class Produto implements Serializable {
 		this.itens = itens;
 	}
 
-	//HashCode e Equals, em java para que dois objetos possam ser comparados pelo seu conteudo e nao pela memoria.
+	// HashCode e Equals, em java para que dois objetos possam ser comparados pelo seu conteudo e nao pela memoria
 	@Override
 	public int hashCode() {
 		final int prime = 31;

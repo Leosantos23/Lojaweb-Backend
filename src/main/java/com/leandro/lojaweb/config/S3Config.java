@@ -12,7 +12,7 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
 @Configuration
 public class S3Config {
-	
+
 	@Value("${aws.access_key_id}")
 	private String awsId;
 
@@ -21,7 +21,6 @@ public class S3Config {
 
 	@Value("${s3.region}")
 	private String region;
-
 
 	@Bean
 	public AmazonS3 s3client() {
@@ -35,4 +34,3 @@ public class S3Config {
 	}
 
 }
-

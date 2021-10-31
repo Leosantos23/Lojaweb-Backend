@@ -27,9 +27,12 @@ import com.leandro.lojaweb.services.exceptions.ObjectNotFoundException;
 @Service
 public class PedidoService {
 
-	@Autowired // Aqui eu instancio o repositorio (repo) abaixo, que na qual sera
-				// automaticamente instanciada pelo SPRING, Pelo mecanismo de injecao de
-				// dependencias, ou inversao de controle.
+	/*
+	 * Aqui eu instancio o repositorio (repo) abaixo, que na qual sera
+	 * automaticamente instanciada pelo SPRING, Pelo mecanismo de injecao de
+	 * dependencias, ou inversao de controle
+	 */
+	@Autowired
 	private PedidoRepository repo;
 
 	@Autowired
@@ -51,7 +54,7 @@ public class PedidoService {
 	@Autowired
 	private EmailService emailService;
 
-	// Aqui vou fazer uma funcao de buscar a Categoria por ID.
+	// Aqui vou fazer uma funcao de buscar a Categoria por ID
 	public Pedido buscar(Integer id) {
 		Optional<Pedido> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
@@ -60,15 +63,13 @@ public class PedidoService {
 
 	@Transactional
 	public @Valid Pedido insert(@Valid Pedido obj) {
-		// Setar o id desse objeto para nulo, para garantir que realmente estou
-		// inserindo um novo pedido.
+		// Setar o id desse objeto para nulo, para garantir que realmente estou inserindo um novo pedido
 		obj.setId(null);
 
-		// Setar o cliente ao pedido.
+		// Setar o cliente ao pedido
 		obj.setCliente(clienteService.find(obj.getCliente().getId()));
 
-		// Setar o instante desse pedido como sendo um new date, que garante uma nova
-		// data com o momento atual.
+		// Setar o instante desse pedido como sendo um new date, que garante uma nova data com o momento atual
 		obj.setInstante(new Date());
 		// Status do pagamento
 		obj.getPagamento().setStatus(StatusPagamento.PENDENTE);
@@ -92,7 +93,6 @@ public class PedidoService {
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
-		// emailService.sendOrderConfirmationEmail(obj);
 		emailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
 	}
@@ -105,9 +105,9 @@ public class PedidoService {
 
 		}
 
-		//Para fazer uma consulta e retornar uma pagina de dados, e preciso fazer outro objeto do tipo PAGEREQUEST
-		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction),orderBy);
-		
+		// Para fazer uma consulta e retornar uma pagina de dados, e preciso fazer outro objeto do tipo PAGEREQUEST
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+
 		Cliente cliente = clienteService.find(user.getId());
 		return repo.findByCliente(cliente, pageRequest);
 

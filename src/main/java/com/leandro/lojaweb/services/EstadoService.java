@@ -10,10 +10,10 @@ import com.leandro.lojaweb.repositories.EstadoRepository;
 
 @Service
 public class EstadoService {
-	
+
 	@Autowired
 	private EstadoRepository repo;
-	
+
 	public List<Estado> findAll() {
 		return repo.findAllByOrderByNome();
 	}

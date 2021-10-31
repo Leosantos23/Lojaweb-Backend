@@ -6,8 +6,11 @@ import org.springframework.stereotype.Repository;
 import com.leandro.lojaweb.domain.Endereco;
 
 @Repository
-//COM isto sera capaz de realizar varios tipos de acessos e transacoes a dados do banco referente ao objeto Categoria,
-//que por sua vez esta mapeado com a tabela no banco de dados.
+/*
+ * Com isto sera capaz de realizar varios tipos de acessos e transacoes a dados
+ * do banco referente ao objeto Categoria, que por sua vez esta mapeado com a
+ * tabela no banco de dados
+ */
 public interface EnderecoRepository extends JpaRepository<Endereco, Integer> {
-	
+
 }

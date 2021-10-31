@@ -23,8 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.leandro.lojaweb.domain.enums.Perfil;
 import com.leandro.lojaweb.domain.enums.TipoCliente;
 
-@Entity // Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do
-		// banco de dados
+@Entity // Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
 public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -33,7 +32,7 @@ public class Cliente implements Serializable {
 	private Integer id;
 	private String nome;
 
-	@Column(unique = true) // Aqui eu garanto que este campo sera unico.
+	@Column(unique = true) // Aqui eu garanto que este campo sera unico
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipo;
@@ -51,8 +50,8 @@ public class Cliente implements Serializable {
 	// Aqui coloco telefone, por um conjunto de strings
 	private Set<String> telefones = new HashSet<>();
 
-	// Acrescentar a tabela perfis na base de dados.
-	@ElementCollection(fetch = FetchType.EAGER) // Garantir que os dados do perfil vira tambem.
+	// Acrescentar a tabela perfis na base de dados
+	@ElementCollection(fetch = FetchType.EAGER) // Garantir que os dados do perfil vira tambem
 	@CollectionTable(name = "PERFIS")
 	private Set<Integer> perfis = new HashSet<>();
 
@@ -60,10 +59,10 @@ public class Cliente implements Serializable {
 	@JsonIgnore // Os pedidos de um cliente nao vai ser serializados
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
-	
+
 	// Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
 	public Cliente() {
-		
+
 		addPerfil(Perfil.CLIENTE);
 	}
 
@@ -78,7 +77,7 @@ public class Cliente implements Serializable {
 		this.tipo = (tipo == null) ? null : tipo.getCod();
 		this.senha = senha;
 		addPerfil(Perfil.CLIENTE);
-		
+
 	}
 
 	// getters e setters
@@ -156,8 +155,8 @@ public class Cliente implements Serializable {
 
 	// Metodo set para configurar o perfil, chamando o enum
 	public Set<Perfil> getPerfis() {
-		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());// Com isso retorna os perfis do
-																						// cliente.
+		// Com isso retorna os perfis do cliente
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
 	}
 
 	// Metodo para adicionar um novo perfil
@@ -165,8 +164,7 @@ public class Cliente implements Serializable {
 		perfis.add(perfil.getCod());
 	}
 
-	// HashCode e Equals, em java para que dois objetos possam ser comparados pelo
-	// seu conteudo e nao pela memoria.
+	// HashCode e Equals, em java para que dois objetos possam ser comparados pelo seu conteudo e nao pela memoria
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -14,13 +14,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.leandro.lojaweb.domain.enums.StatusPagamento;
 
-@Entity // Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do
-		// banco de dados
-@Inheritance(strategy = InheritanceType.JOINED) // Sera uma tabela para cada, (Pagamento com cartao e boleto)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type") // Gerar um campo
-																									// adicional para
-																									// escolher o tipo
-																									// de pagamento
+//Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
+@Entity 
+//Sera uma tabela para cada, (Pagamento com cartao e boleto)
+@Inheritance(strategy = InheritanceType.JOINED) 
+// Gerar um campo adicional para escolher o tipo de pagamento
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 
 public abstract class Pagamento implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -36,8 +35,7 @@ public abstract class Pagamento implements Serializable {
 	@MapsId
 	private Pedido pedido;
 
-	// Metodo Construtor vazio, que instancio um objeto sem jogar nada para os
-	// atributos principais
+	// Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
 	public Pagamento() {
 
 	}
@@ -50,7 +48,7 @@ public abstract class Pagamento implements Serializable {
 		this.pedido = pedido;
 	}
 
-	// getters e setters
+	// Getters e setters
 	public Integer getId() {
 		return id;
 	}
@@ -75,8 +73,7 @@ public abstract class Pagamento implements Serializable {
 		this.pedido = pedido;
 	}
 
-	// HashCode e Equals, em java para que dois objetos possam ser comparados pelo
-	// seu conteudo e nao pela memoria.
+	// HashCode e Equals, em java para que dois objetos possam ser comparados pelo seu conteudo e nao pela memoria
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -23,7 +23,7 @@ public class SmtpEmailService extends AbstractEmailService {
 	@Override
 	public void sendEmail(SimpleMailMessage msg) {
 		LOG.info("Enviando email...");
-		mailSender.send(msg);// Para enviar de verdade, ao inves de mostrar no to string, como anteriormente.
+		mailSender.send(msg);// Para enviar de verdade, ao inves de mostrar no to string, como anteriormente
 		LOG.info("Email enviado!");
 	}
 

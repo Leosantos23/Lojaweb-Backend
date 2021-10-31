@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leandro.lojaweb.domain.PagamentoComBoleto;
 import com.leandro.lojaweb.domain.PagamentoComCartao;
 
-//classe de configuração com um método @Bean para registrar as subclasses
+// Classe de configuração com um método @Bean para registrar as subclasses
 @Configuration
 public class JacksonConfig {
 // https://stackoverflow.com/questions/41452598/overcome-can-not-construct-instance-ofinterfaceclass-without-hinting-the-pare

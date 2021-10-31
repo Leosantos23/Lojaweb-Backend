@@ -9,36 +9,35 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-@Entity//Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
+@Entity // Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
 public class Cidade implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	//Atributos basicos
+
+	// Atributos basicos
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)//Definindo a geracao automatica dos ids das categorias
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Definindo a geracao automatica dos ids das categorias
 	private Integer id;
 	private String nome;
-	
-	//Associacoes e relacionamentos, muitas cidades tem um estado.
-	@ManyToOne//Relacionamento muitos para um.
-	@JoinColumn(name= "estado_id")//Mapeamento da associacao no lado cidade. ja com o nome da chave estrangeira de estado.
+
+	// Associacoes e relacionamentos, muitas cidades tem um estado
+	@ManyToOne // Relacionamento muitos para um
+	@JoinColumn(name = "estado_id") // Mapeamento da associacao no lado cidade. ja com o nome da chave estrangeira de estado
 	private Estado estado;
-	
-	//Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
+
+	// Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
 	public Cidade() {
-		
+
 	}
 
-	//Metodo Construtor com os parametros, - colecao
+	// Metodo Construtor com os parametros, - colecao
 	public Cidade(Integer id, String nome, Estado estado) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.estado = estado;
 	}
-	
-	
-	//getters e setters
+
+	// getters e setters
 	public Integer getId() {
 		return id;
 	}
@@ -63,7 +62,7 @@ public class Cidade implements Serializable {
 		this.estado = estado;
 	}
 
-	//HashCode e Equals, em java para que dois objetos possam ser comparados pelo seu conteudo e nao pela memoria.
+	// HashCode e Equals, em java para que dois objetos possam ser comparados pelo seu conteudo e nao pela memoria
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -88,5 +87,5 @@ public class Cidade implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 }

@@ -9,15 +9,15 @@ import com.leandro.lojaweb.domain.PagamentoComBoleto;
 
 @Service
 public class BoletoService {
-	
+
 	public void preencherPagamentoComBoleto(PagamentoComBoleto pgBoleto, Date momentoPedido) {
-		
+
 		Calendar calendario = Calendar.getInstance();
 		calendario.setTime(momentoPedido);
 		calendario.add(Calendar.DAY_OF_MONTH, 7);
-		
+
 		pgBoleto.setDataVencimento(calendario.getTime());
-		
+
 	}
 
 }

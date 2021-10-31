@@ -11,37 +11,37 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity//Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
+@Entity // Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
 public class Endereco implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)//Definindo a geracao automatica dos ids
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Definindo a geracao automatica dos ids
 	private Integer id;
 	private String logradouro;
 	private String numero;
 	private String complemento;
 	private String bairro;
 	private String cep;
-	
-	@JsonIgnore//Aqui falo que o endereco nao pode serializar o cliente.
+
+	@JsonIgnore // Aqui falo que o endereco nao pode serializar o cliente
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
-	//Associacao endereco tem 1 cliente
+	// Associacao endereco tem 1 cliente
 	private Cliente cliente;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "cidade_id")
-	//Associacao endereco tem uma cidade.
+	// Associacao endereco tem uma cidade.
 	private Cidade cidade;
-	
-	//Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
+
+	// Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
 	@SuppressWarnings("unused")
 	private Endereco() {
-		
+
 	}
 
-	//Metodo Construtor com os parametros, - colecao
+	// Metodo Construtor com os parametros, - colecao
 	public Endereco(Integer id, String logradouro, String numero, String complemento, String bairro, String cep,
 			Cliente cliente, Cidade cidade) {
 		super();
@@ -55,7 +55,7 @@ public class Endereco implements Serializable {
 		this.cidade = cidade;
 	}
 
-	//getters e setters
+	// getters e setters
 	public Integer getId() {
 		return id;
 	}
@@ -111,7 +111,7 @@ public class Endereco implements Serializable {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	
+
 	public Cidade getCidade() {
 		return cidade;
 	}
@@ -120,7 +120,7 @@ public class Endereco implements Serializable {
 		this.cidade = cidade;
 	}
 
-	//HashCode e Equals, em java para que dois objetos possam ser comparados pelo seu conteudo e nao pela memoria.
+	// HashCode e Equals, em java para que dois objetos possam ser comparados pelo seu conteudo e nao pela memoria
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -145,6 +145,5 @@ public class Endereco implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
+
 }

@@ -34,7 +34,7 @@ public abstract class AbstractEmailService implements EmailService {
 	@Override
 	public void sendOrderConfirmationEmail(Pedido obj) {
 		SimpleMailMessage sm = prepareSimpleMailMessageFromPedido(obj);
-		sendEmail(sm);// Chamo o metodo la na interface e passo os parametros.
+		sendEmail(sm);// Chamo o metodo la na interface e passo os parametros
 	}
 
 	// Metodo para gerar o simple mail message
@@ -55,12 +55,12 @@ public abstract class AbstractEmailService implements EmailService {
 
 	protected String htmlFromTemplatePedido(Pedido obj) {
 		Context context = new Context();
-		// Apartir do objeto context eu vou enviar o meu objeto pedido para o template
-		// html
+		// Apartir do objeto context eu vou enviar o meu objeto pedido para o template html
 		context.setVariable("pedido", obj);
-		// Agora tenho que processar o template para ele me retornar o html na forma de
-		// string
-		// Para isso vou precisar de uma instancia do template engine.
+		/*
+		 * Agora tenho que processar o template para ele me retornar o html na forma de
+		 * string Para isso vou precisar de uma instancia do template engine
+		 */
 		return templateEngine.process("email/confirmacaoPedido", context);
 
 	}
@@ -70,10 +70,10 @@ public abstract class AbstractEmailService implements EmailService {
 		// Aqui trato a excessao
 		try {
 			MimeMessage mm = prepareMimeMessageFromPedido(obj);
-			sendHtmlEmail(mm);// Chamo o metodo la na interface e passo os parametros.
-			
+			sendHtmlEmail(mm);// Chamo o metodo la na interface e passo os parametros
+
 		} catch (MessagingException e) {
-			// Porem se der erro mando o email em texto plano mesmo.
+			// Porem se der erro mando o email em texto plano mesmo
 			sendOrderConfirmationEmail(obj);
 		}
 	}
@@ -94,15 +94,15 @@ public abstract class AbstractEmailService implements EmailService {
 		mmh.setText(htmlFromTemplatePedido(obj), true);
 		return mimeMessage;
 	}
-	
+
 	// Metodo para a geracao da nova senha
 	@Override
 	public void sendNewPasswordEmail(Cliente cliente, String newPass) {
 		SimpleMailMessage sm = prepareNewPasswordEmail(cliente, newPass);
 		sendEmail(sm);// Envia o email
 	}
-	
-	//Metodo auxiliar para preparar o email
+
+	// Metodo auxiliar para preparar o email
 	protected SimpleMailMessage prepareNewPasswordEmail(Cliente cliente, String newPass) {
 		SimpleMailMessage sm = new SimpleMailMessage();
 		sm.setTo(cliente.getEmail());
@@ -112,6 +112,5 @@ public abstract class AbstractEmailService implements EmailService {
 		sm.setText("Nova senha: " + newPass);
 		return sm;
 	}
-
 
 }

@@ -10,11 +10,14 @@ import com.leandro.lojaweb.domain.Cliente;
 import com.leandro.lojaweb.domain.Pedido;
 
 @Repository
-//COM isto sera capaz de realizar varios tipos de acessos e transacoes a dados do banco referente ao objeto Categoria,
-//que por sua vez esta mapeado com a tabela no banco de dados.
+/*
+ * Com isto sera capaz de realizar varios tipos de acessos e transacoes a dados
+ * do banco referente ao objeto Categoria, que por sua vez esta mapeado com a
+ * tabela no banco de dados
+ */
 public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
 	
-	// Consulta para retornar um page de pedido utilizando os padroes de nomes do framwork
+	// Consulta para retornar um page de pedido utilizando os padroes de nomes do framework
 	@Transactional(readOnly=true)
 	Page<Pedido> findByCliente(Cliente cliente, Pageable pageRequest);
 	

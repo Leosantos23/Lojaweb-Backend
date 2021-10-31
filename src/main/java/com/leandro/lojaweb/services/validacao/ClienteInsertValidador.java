@@ -38,8 +38,8 @@ public class ClienteInsertValidador implements ConstraintValidator<ClienteInsert
 				&& !ValidaCpfCnpj.validaCNPJ(objDto.getCpfOuCnpj())) {
 			list.add(new CampoMensagem("cpfOuCnpj", "CNPJ invalido"));
 		}
-		
-		//Testar se o email ja existe
+
+		// Testar se o email ja existe
 		Cliente aux = repo.findByEmail(objDto.getEmail());
 		if (aux != null) {
 			list.add(new CampoMensagem("email", "Email ja existente!"));

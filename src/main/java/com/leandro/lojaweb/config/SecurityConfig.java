@@ -28,7 +28,7 @@ import com.leandro.lojaweb.security.JWTUtil;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	//Para o banco h2
+	// Para o banco h2
 	@Autowired
 	private Environment env;
 	
@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			"/h2-console/**"
 			};
 	
-	//Outro vetor com os caminhos apenas de leitura para aumentar a seguranca
+	// Outro vetor com os caminhos apenas de leitura para aumentar a seguranca
 	private static final String[] PUBLIC_MATCHERS_GET = {
 			"/produtos/**",
 			"/categorias/**",
@@ -66,9 +66,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			http.headers().frameOptions().disable();
 		}
 		
-		//Para que o bean abaixo seja ativado
+		// Para que o bean abaixo seja ativado
 		http.cors()
-		//Para desativar ataques de CSRF
+		// Para desativar ataques de CSRF
 		.and().csrf().disable();
 		// Vou comecar acessando o objeto http
 		http.authorizeRequests()
@@ -78,13 +78,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.anyRequest()
 		.authenticated();
 		
-		//Para passar pelo filtro de autenticacao
+		// Para passar pelo filtro de autenticacao
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
 		
-		//Para passar pelo filtro de autorizacao
+		// Para passar pelo filtro de autorizacao
 		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService ));
 		
-		//Para assegurar que o back end nao vai criar sessao de usuario
+		// Para assegurar que o back end nao vai criar sessao de usuario
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
@@ -107,7 +107,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return source;
 	}
 	
-	//Adicionar seguranca a senha
+	// Adicionar seguranca a senha
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		

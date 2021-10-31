@@ -32,16 +32,16 @@ public class S3Service {
 
 		try {
 
-			// Crio uma variavel para receber o nome deste arquivo vindo pelo multipartfile.
+			// Crio uma variavel para receber o nome deste arquivo vindo pelo multipartfile
 			String fileName = multipartFile.getOriginalFilename();
 
-			// Instancio atraves do inputstream, ele encapsula o processamento de leitura apartir de uma origem.
+			// Instancio atraves do inputstream, ele encapsula o processamento de leitura apartir de uma origem
 			InputStream is = multipartFile.getInputStream();
 
-			// Instancio uma string contendo a informacao do tipo de arquivo que foi enviado.
+			// Instancio uma string contendo a informacao do tipo de arquivo que foi enviado
 			String contentType = multipartFile.getContentType();
 
-			// Retorna os tres dados.
+			// Retorna os tres dados
 			return uploadFile(is, fileName, contentType);
 
 		} catch (IOException e) {
@@ -49,8 +49,10 @@ public class S3Service {
 		}
 	}
 
-	// Metodo para aumentar a modularidade aqui do meu servico, criando uma
-	// sobrecarga do metodo acima, porem recebendo outros parametros.
+	/*
+	 * Metodo para aumentar a modularidade aqui do meu servico, criando uma
+	 * sobrecarga do metodo acima, porem recebendo outros parametros
+	 */
 	public URI uploadFile(InputStream is, String fileName, String contentType) {
 		try {
 			ObjectMetadata meta = new ObjectMetadata();

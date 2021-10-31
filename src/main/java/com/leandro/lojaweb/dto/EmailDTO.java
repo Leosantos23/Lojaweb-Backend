@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
-//Classe reponsavel apenas para receber o email que o usuario ira informar
+// Classe reponsavel apenas para receber o email que o usuario ira informar
 public class EmailDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -13,7 +13,7 @@ public class EmailDTO implements Serializable {
 	@Email(message = "Email inválido!")
 	private String email;
 
-	// Construstor vazio
+	// Construtor vazio
 	public EmailDTO() {
 	}
 

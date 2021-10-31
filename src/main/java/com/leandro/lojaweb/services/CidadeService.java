@@ -10,7 +10,7 @@ import com.leandro.lojaweb.repositories.CidadeRepository;
 
 @Service
 public class CidadeService {
-	
+
 	@Autowired
 	private CidadeRepository repo;
 

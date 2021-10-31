@@ -11,23 +11,23 @@ import com.leandro.lojaweb.repositories.ClienteRepository;
 import com.leandro.lojaweb.security.UserSpringSecurity;
 
 @Service
-public class UserDetaisServiceImplement implements UserDetailsService{
-	
+public class UserDetaisServiceImplement implements UserDetailsService {
+
 	@Autowired
 	private ClienteRepository repo;
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		//Implementar essa busca por email
+		// Implementar essa busca por email
 		Cliente cliente = repo.findByEmail(email);
-		
-		//testar
+
+		// testar
 		if (cliente == null) {
-			
+
 			throw new UsernameNotFoundException(email);
-			
+
 		}
-		//Se der certo tem que retornar a classe, contendo os dados
+		// Se der certo tem que retornar a classe, contendo os dados
 		return new UserSpringSecurity(cliente.getId(), cliente.getEmail(), cliente.getSenha(), cliente.getPerfis());
 	}
 

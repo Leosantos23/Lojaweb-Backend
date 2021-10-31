@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity // aqui faco tambem o mapeamento dizendo que sera uma entidade tambem.
+@Entity // Aqui faco tambem o mapeamento dizendo que sera uma entidade tambem
 public class ItemPedido implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -22,8 +22,7 @@ public class ItemPedido implements Serializable {
 	private Integer quantidade;
 	private Double preco;
 
-	// Metodo Construtor vazio, que instancio um objeto sem jogar nada para os
-	// atributos principais
+	// Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
 	@SuppressWarnings("unused")
 	private ItemPedido() {
 
@@ -32,28 +31,27 @@ public class ItemPedido implements Serializable {
 	// Metodo Construtor com os parametros, - colecao
 	public ItemPedido(Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preco) {
 		super();
-		id.setPedido(pedido);// atribuo o pedido que veio como argumento
-		id.setProduto(produto);// atribuo o produto que veio como argumento
+		id.setPedido(pedido);// Atribuo o pedido que veio como argumento
+		id.setProduto(produto);// Atribuo o produto que veio como argumento
 		this.desconto = desconto;
 		this.quantidade = quantidade;
 		this.preco = preco;
 	}
 
-	// Para eu ter acesso direto ao pedido e produto fora da minnha classe item
-	// pedido.
-	// Faz mais sentido do que acessar o id e depois o item do pedido.
+	/* Para eu ter acesso direto ao pedido e produto fora da minnha classe item pedido, 
+	 * Faz mais sentido do que acessar o id e depois o item do pedido */
 
 	// Metodo para calcular o subtotal dos pedidos
 	public double getSubTotalPedido() {
 		return (preco - desconto) * quantidade;
 	}
 
-	@JsonIgnore // Nao sera serializado.
+	@JsonIgnore // Nao sera serializado
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
 
-	// sera serializado.
+	// Sera serializado
 	public Produto getProduto() {
 		return id.getProduto();
 	}
@@ -67,7 +65,7 @@ public class ItemPedido implements Serializable {
 		id.setProduto(produto);
 	}
 
-	// getters e setters
+	// Getters e setters
 	public ItemPedidoPK getId() {
 		return id;
 	}
@@ -100,8 +98,7 @@ public class ItemPedido implements Serializable {
 		this.preco = preco;
 	}
 
-	// HashCode e Equals, em java para que dois objetos possam ser comparados pelo
-	// seu conteudo e nao pela memoria.
+	// HashCode e Equals, em java para que dois objetos possam ser comparados pelo seu conteudo e nao pela memoria
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -130,10 +127,10 @@ public class ItemPedido implements Serializable {
 	// Metodo to String, de implementacao basica de item pedido
 	@Override
 	public String toString() {
-		
-		//Para formatar o valor bonitinho
+
+		// Para formatar o valor bonitinho
 		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-		
+
 		StringBuilder builder = new StringBuilder();
 		builder.append(getProduto().getNome());
 		builder.append(", Quantidade: ");

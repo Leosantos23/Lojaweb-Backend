@@ -26,15 +26,14 @@ public class AuthResource {
 	@Autowired
 	private AuthService service;
 
-	// Implementacao do endpoint para dar refresh (resetar) o token, porem o usuario
-	// tem que estar logado no sistema
+	// Implementacao do endpoint para dar refresh (resetar) o token, porem o usuario tem que estar logado no sistema
 	@RequestMapping(value = "/refresh_token", method = RequestMethod.POST)
 	public ResponseEntity<Void> refreshToken(HttpServletResponse response) {
 
 		UserSpringSecurity user = UserService.authenticated();
 		String token = jwtUtil.generateToken(user.getUsername());
 		response.addHeader("Authorization", "Bearer " + token);
-		// Para tratamento de erro de cors 
+		// Para tratamento de erro de cors
 		response.addHeader("access-control-expose-headers", "Authorization");
 		return ResponseEntity.noContent().build();
 	}

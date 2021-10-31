@@ -34,7 +34,7 @@ public class AuthService {
 			throw new ObjectNotFoundException("Email não encontrado!");
 		}
 		
-		//Atributos para gerar uma nova senha aleatoria usando o bcrypt
+		// Atributos para gerar uma nova senha aleatoria usando o bcrypt
 		String newPass = newPassword();
 		cliente.setSenha(pe.encode(newPass));
 		
@@ -65,4 +65,3 @@ public class AuthService {
 		}
 	}
 }
-

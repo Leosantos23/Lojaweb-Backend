@@ -7,19 +7,20 @@ import com.leandro.lojaweb.domain.Estado;
 public class EstadoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	//Atributos de estado
+	// Atributos de estado
 	private Integer id;
 	private String nome;
-	
+
 	// Metodo construtor sem parametros
 	public EstadoDTO() {
 	}
+
 	// Metodo construtor com parametros
 	public EstadoDTO(Estado obj) {
 		id = obj.getId();
 		nome = obj.getNome();
 	}
-	
+
 	// Getters e setters
 	public Integer getId() {
 		return id;

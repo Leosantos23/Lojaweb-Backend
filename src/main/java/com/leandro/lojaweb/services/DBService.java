@@ -95,7 +95,7 @@ public class DBService {
 		Produto p9 = new Produto(null, "Abajour", 100.00);
 		Produto p10 = new Produto(null, "Pendente", 180.00);
 		Produto p11 = new Produto(null, "Shampoo", 90.00);
-		
+
 		// Acrescentando mais produtos para testar infinity scroll
 		Produto p12 = new Produto(null, "Produto 12", 10.00);
 		Produto p13 = new Produto(null, "Produto 13", 10.00);
@@ -136,12 +136,13 @@ public class DBService {
 		Produto p48 = new Produto(null, "Produto 48", 10.00);
 		Produto p49 = new Produto(null, "Produto 49", 10.00);
 		Produto p50 = new Produto(null, "Produto 50", 10.00);
-		
+
 		// Associo os produtos novos a categoria 1 para ester infinity scroll
-		cat1.getProdutos().addAll(Arrays.asList(p12, p13, p14, p15, p16, p17, p18, p19, p20,
-		p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31, p32, p34, p35, p36, p37, p38,
-		p39, p40, p41, p42, p43, p44, p45, p46, p47, p48, p49, p50));
-		
+		cat1.getProdutos()
+				.addAll(Arrays.asList(p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27,
+						p28, p29, p30, p31, p32, p34, p35, p36, p37, p38, p39, p40, p41, p42, p43, p44, p45, p46, p47,
+						p48, p49, p50));
+
 		// Instanciacao de produtos novos a categoria 1
 		p12.getCategorias().add(cat1);
 		p13.getCategorias().add(cat1);
@@ -181,7 +182,7 @@ public class DBService {
 		p47.getCategorias().add(cat1);
 		p48.getCategorias().add(cat1);
 		p49.getCategorias().add(cat1);
-		p50.getCategorias().add(cat1);	
+		p50.getCategorias().add(cat1);
 
 		// Aqui faco as associacoes das categorias
 		cat1.getProdutos().addAll(Arrays.asList(p1, p2, p3));
@@ -210,11 +211,11 @@ public class DBService {
 
 		// Aqui grava todos produtos no banco de dados.
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));
-		
+
 		// Aqui grava os produtos novos no banco de dados
-		produtoRepository.saveAll(Arrays.asList(p12, p13, p14, p15, p16, p17, p18, p19, p20,
-		p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31, p32, p33, p34, p35, p36, p37, p38,
-		p39, p40, p41, p42, p43, p44, p45, p46, p47, p48, p49, p50));
+		produtoRepository.saveAll(Arrays.asList(p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25,
+				p26, p27, p28, p29, p30, p31, p32, p33, p34, p35, p36, p37, p38, p39, p40, p41, p42, p43, p44, p45, p46,
+				p47, p48, p49, p50));
 
 		// Aqui faco as instancias dos estados
 		Estado est1 = new Estado(null, "Minas Gerais");
@@ -235,13 +236,15 @@ public class DBService {
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
 		// Instancias de Clientes
-		Cliente cli1 = new Cliente(null, "Leandro Moreira", "lesoft.com@gmail.com", "97778845632", TipoCliente.PESSOAFISICA, pe.encode("123"));
+		Cliente cli1 = new Cliente(null, "Leandro Moreira", "lesoft.com@gmail.com", "97778845632",
+				TipoCliente.PESSOAFISICA, pe.encode("123"));
 		// Aqui instancio os telefones do cliente
 		cli1.getTelefones().addAll(Arrays.asList("999090935", "992213331"));
 		// Adicionar como admim
 		cli1.addPerfil(Perfil.ADMIN);
 
-		Cliente cli2 = new Cliente(null, "Deisa Machado", "deisa.com@gmail.com", "31628382740", TipoCliente.PESSOAFISICA, pe.encode("123"));
+		Cliente cli2 = new Cliente(null, "Deisa Machado", "deisa.com@gmail.com", "31628382740",
+				TipoCliente.PESSOAFISICA, pe.encode("123"));
 		cli2.getTelefones().addAll(Arrays.asList("999090933", "992213333"));// Aqui instancio os telefones do cliente
 
 		// Instancias de endereco

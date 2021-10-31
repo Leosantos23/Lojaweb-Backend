@@ -25,8 +25,8 @@ public class PedidoResource {
 	@Autowired // Para instanciar automaticamente
 	private PedidoService service;
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET) // Para que este metodo seja REST tenho que associar a
-																	// algum verbo HTTP (GET, POST, etc)
+	// Para que este metodo seja REST tenho que associar a algum verbo HTTP (GET, POST, etc)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET) 
 	public ResponseEntity<Pedido> find(@PathVariable Integer id) {
 
 		Pedido obj = service.buscar(id);// Aqui chamo o obj o service ao metodo buscar, repassando o id.

@@ -10,37 +10,39 @@ import org.hibernate.validator.constraints.Length;
 import com.leandro.lojaweb.domain.Cliente;
 import com.leandro.lojaweb.services.validacao.ClienteUpdate;
 
-@ClienteUpdate//Chamo a anotattion customizada de updade
-public class ClienteDTO  implements Serializable {
+@ClienteUpdate // Chamo a anotattion customizada de updade
+public class ClienteDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer id;
-	
-	@NotEmpty(message= "Campo obrigatorio!")
-	@Length(min=5, max=120, message="O tamanho deve ser entre 5 e 120 caracteres!")
+
+	@NotEmpty(message = "Campo obrigatorio!")
+	@Length(min = 5, max = 120, message = "O tamanho deve ser entre 5 e 120 caracteres!")
 	private String nome;
-	
-	@NotEmpty(message= "Campo obrigatorio!")
-	@Email(message= "Email invalido!")
+
+	@NotEmpty(message = "Campo obrigatorio!")
+	@Email(message = "Email invalido!")
 	private String email;
-	
-	//Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
-	//Alem disso algumas bibliotecas precisa dele.
+
+	/*
+	 * Metodo Construtor vazio, que instancio um objeto sem jogar nada para os
+	 * atributos principais, alem disso algumas bibliotecas precisa dele
+	 */
 	@SuppressWarnings("unused")
-	private ClienteDTO () {
-		
+	private ClienteDTO() {
+
 	}
-	
-	//Metodo construtor DTO
-	public ClienteDTO (Cliente obj) {
-		
+
+	// Metodo construtor DTO
+	public ClienteDTO(Cliente obj) {
+
 		id = obj.getId();
 		nome = obj.getNome();
 		email = obj.getEmail();
-		
+
 	}
 
-	//getters e setters
+	// Getters e setters
 	public Integer getId() {
 		return id;
 	}
@@ -64,7 +66,5 @@ public class ClienteDTO  implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
 
 }

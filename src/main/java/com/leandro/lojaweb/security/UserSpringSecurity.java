@@ -30,7 +30,8 @@ public class UserSpringSecurity implements UserDetails {
 		this.id = id;
 		this.email = email;
 		this.senha = senha;
-		this.authorities = perfis.stream().map(x -> new SimpleGrantedAuthority(x.getDescricao())).collect(Collectors.toList());
+		this.authorities = perfis.stream().map(x -> new SimpleGrantedAuthority(x.getDescricao()))
+				.collect(Collectors.toList());
 	}
 
 	public Integer getId() {
@@ -59,31 +60,30 @@ public class UserSpringSecurity implements UserDetails {
 	@Override
 	public boolean isAccountNonExpired() {
 
-		return true;// Falo que minha conta nao vai expirar.
+		return true;// Falo que minha conta nao vai expirar
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
 
-		return true;// Falo que minha conta tambem nao esta bloqueada.
+		return true;// Falo que minha conta tambem nao esta bloqueada
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
 
-		return true;// Falo que minha credenciais tambem nao esta expirada.
+		return true;// Falo que minha credenciais tambem nao esta expirada
 	}
 
 	@Override
 	public boolean isEnabled() {
 
-		return true;// Falo que minha conta tambem esta ativa.
+		return true;// Falo que minha conta tambem esta ativa
 	}
-	
+
 	// Metodo hasRole para ser tratado la no metodo buscar em ClienteService
 	public boolean hasRole(Perfil perfil) {
 		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
 	}
-
 
 }

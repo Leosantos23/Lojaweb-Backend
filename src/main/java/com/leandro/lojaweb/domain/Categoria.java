@@ -10,32 +10,32 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-@Entity//Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
+@Entity // Aqui faco o mapeamento com o JPA para criar automaticamente as tabelas do banco de dados
 public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)//Definindo a geracao automatica dos ids das categorias
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Definindo a geracao automatica dos ids das categorias
 	private Integer id;
 	private String nome;
-	
-	//Aqui faco associacoes de uma categoria para muitos produtos
+
+	// Aqui faco associacoes de uma categoria para muitos produtos
 	@ManyToMany(mappedBy = "categorias")
-	private List <Produto> produtos = new ArrayList<>();
-	
-	//Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
-	public Categoria () {
-		
+	private List<Produto> produtos = new ArrayList<>();
+
+	// Metodo Construtor vazio, que instancio um objeto sem jogar nada para os atributos principais
+	public Categoria() {
+
 	}
-	
-	//Metodo Construtor com os atributos
+
+	// Metodo Construtor com os atributos
 	public Categoria(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
 	}
-	
-	//Getters e Setters
+
+	// Getters e Setters
 	public Integer getId() {
 		return id;
 	}
@@ -51,8 +51,8 @@ public class Categoria implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	//Acrescentei depois
+
+	// Acrescentei depois
 	public List<Produto> getProdutos() {
 		return produtos;
 	}
@@ -60,8 +60,8 @@ public class Categoria implements Serializable {
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
 	}
-	
-	//HashCode e Equals, em java para que dois objetos possam ser comparados pelo seu conteudo e nao pela memoria.
+
+	// HashCode e Equals, em java para que dois objetos possam ser comparados pelo seu conteudo e nao pela memoria
 	@Override
 	public int hashCode() {
 		final int prime = 31;

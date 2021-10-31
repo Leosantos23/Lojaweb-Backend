@@ -8,7 +8,7 @@ public class CredenciaisDTO implements Serializable {
 	private String email;
 	private String senha;
 
-	// Contrustorvazio
+	// Construtor vazio
 	public CredenciaisDTO() {
 	}
 
